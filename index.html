@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animasi Bintang dengan Lirik Lagu</title>
+    <title>Perfect - Ed Sheeran with Solar System</title>
     <style>
         body {
             margin: 0;
@@ -12,19 +12,119 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #0a0a20;
+            background-color: #000;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
             color: white;
         }
         
-        #stars-container {
+        /* Background Tata Surya */
+        #solar-system {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
+            overflow: hidden;
+        }
+        
+        .sun {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #ffde00 0%, #ff8c00 70%, #ff4500 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px #ff8c00, 0 0 100px #ff4500;
+            animation: pulse 5s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 50px #ff8c00, 0 0 100px #ff4500; }
+            100% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 70px #ff8c00, 0 0 140px #ff4500; }
+        }
+        
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            transform-origin: center;
+        }
+        
+        .mercury {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #a9a9a9, #696969);
+            top: 50%;
+            left: 50%;
+            margin-top: -5px;
+            margin-left: -5px;
+            animation: orbit-mercury 8s linear infinite;
+        }
+        
+        .venus {
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #e6c229, #d4a017);
+            top: 50%;
+            left: 50%;
+            margin-top: -7.5px;
+            margin-left: -7.5px;
+            animation: orbit-venus 15s linear infinite;
+        }
+        
+        .earth {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #1E90FF, #006400);
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+            animation: orbit-earth 25s linear infinite;
+        }
+        
+        .mars {
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #ff4500, #8b0000);
+            top: 50%;
+            left: 50%;
+            margin-top: -7.5px;
+            margin-left: -7.5px;
+            animation: orbit-mars 40s linear infinite;
+        }
+        
+        @keyframes orbit-mercury {
+            0% { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+        }
+        
+        @keyframes orbit-venus {
+            0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+        }
+        
+        @keyframes orbit-earth {
+            0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+        }
+        
+        @keyframes orbit-mars {
+            0% { transform: rotate(0deg) translateX(240px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(240px) rotate(-360deg); }
+        }
+        
+        /* Bintang-bintang berkedip */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
         
         .star {
@@ -40,16 +140,19 @@
             50% { opacity: var(--opacity); transform: scale(1); }
         }
         
+        /* Container lirik dan kontrol */
         .lyrics-container {
             position: relative;
             width: 80%;
             max-width: 600px;
-            z-index: 1;
-            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
             padding: 20px;
             text-align: center;
             margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         #lyrics {
@@ -68,7 +171,7 @@
         }
         
         .controls {
-            z-index: 1;
+            z-index: 2;
             display: flex;
             gap: 15px;
         }
@@ -82,12 +185,12 @@
             cursor: pointer;
             font-size: 16px;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         
         button:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 107, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 107, 255, 0.6);
         }
         
         #progress-container {
@@ -98,7 +201,7 @@
             border-radius: 5px;
             margin-top: 20px;
             overflow: hidden;
-            z-index: 1;
+            z-index: 2;
         }
         
         #progress-bar {
@@ -110,7 +213,7 @@
         
         .song-info {
             margin-bottom: 20px;
-            z-index: 1;
+            z-index: 2;
             text-align: center;
         }
         
@@ -118,6 +221,7 @@
             font-size: 24px;
             margin-bottom: 5px;
             color: #4dabff;
+            text-shadow: 0 0 10px rgba(77, 171, 255, 0.7);
         }
         
         .artist {
@@ -127,8 +231,19 @@
     </style>
 </head>
 <body>
+    <!-- Background Tata Surya -->
+    <div id="solar-system">
+        <div class="sun"></div>
+        <div class="planet mercury"></div>
+        <div class="planet venus"></div>
+        <div class="planet earth"></div>
+        <div class="planet mars"></div>
+    </div>
+    
+    <!-- Bintang-bintang berkedip -->
     <div id="stars-container"></div>
     
+    <!-- Konten utama -->
     <div class="song-info">
         <div class="song-title">Perfect</div>
         <div class="artist">Ed Sheeran</div>
@@ -157,6 +272,7 @@
         const restartBtn = document.getElementById('restartBtn');
         const audio = document.getElementById('audio');
         const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
         
         // Data lirik dengan timestamp (dalam detik)
         const songData = {
@@ -177,7 +293,7 @@
             ]
         };
         
-        // Buat bintang-bintang
+        // Buat bintang-bintang yang berkedip
         function createStars() {
             const starCount = 200;
             
