@@ -3,357 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menceritakanmu Batas Senja - Lirik Lagu</title>
+    <title>Tulus - Monokrom | Lirik Lagu</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            color: #fff;
+            background-color: #f5f5f5;
+            color: #333;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
         .container {
             max-width: 800px;
-            padding: 2rem;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            margin: 2rem;
+            width: 90%;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            box-sizing: border-box;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #e94560;
-            text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 5px;
         }
 
-        .artist {
-            font-style: italic;
-            margin-bottom: 2rem;
-            color: #a5a5a5;
+        h2 {
+            color: #7f8c8d;
+            text-align: center;
+            font-weight: normal;
+            margin-top: 0;
+            margin-bottom: 30px;
         }
 
-        .audio-player {
+        .audio-container {
             width: 100%;
-            margin-bottom: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .lyrics-container {
+            line-height: 1.8;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .lyric-line {
+            margin: 15px 0;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+        }
+
+        .lyric-line.active {
+            color: #2c3e50;
+            font-weight: bold;
+            font-size: 20px;
+            transform: scale(1.05);
         }
 
         .progress-container {
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            margin: 1rem 0;
+            height: 5px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            margin: 20px 0;
             cursor: pointer;
         }
 
         .progress-bar {
             height: 100%;
-            background: #e94560;
-            border-radius: 3px;
+            background-color: #3498db;
+            border-radius: 5px;
             width: 0%;
-            transition: width 0.1s;
         }
 
-        .time-info {
+        .time-display {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
-            color: #ccc;
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
         }
 
         .controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .control-btn {
             background: none;
             border: none;
-            color: white;
-            font-size: 1.5rem;
+            font-size: 24px;
+            color: #2c3e50;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: color 0.2s;
         }
 
         .control-btn:hover {
-            color: #e94560;
-            transform: scale(1.1);
+            color: #3498db;
         }
 
-        .play-btn {
-            font-size: 2rem;
+        .play-pause {
+            font-size: 36px;
         }
 
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .lyrics-container {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 1rem;
-            margin-top: 1rem;
-            scroll-behavior: smooth;
-        }
-
-        .lyrics-line {
-            margin: 0.8rem 0;
-            transition: all 0.3s;
-            opacity: 0.7;
-        }
-
-        .active-lyric {
-            color: #e94560;
-            font-weight: bold;
-            font-size: 1.3rem;
-            opacity: 1;
-            text-shadow: 0 0 5px rgba(233, 69, 96, 0.7);
-            transform: scale(1.05);
-        }
-
-        .sunset {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100px;
-            background: linear-gradient(to top, #0f3460, #e94560, #f8b400);
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .container {
-                width: 90%;
-                padding: 1rem;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
+                padding: 20px;
             }
             
             .lyrics-container {
-                font-size: 1rem;
-                max-height: 300px;
+                font-size: 16px;
             }
             
-            .active-lyric {
-                font-size: 1.1rem;
+            .lyric-line.active {
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Menceritakanmu Batas Senja</h1>
-        <div class="artist">[Nama Artis]</div>
+        <h1>Monokrom</h1>
+        <h2>Tulus</h2>
         
-        <div class="audio-player">
-            <audio id="audio" src="batas senja.mp3"></audio>
-            
-            <div class="progress-container" id="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-            
-            <div class="time-info">
-                <span id="current-time">0:00</span>
-                <span id="duration">0:00</span>
-            </div>
-            
-            <div class="controls">
-                <button class="control-btn" id="prev-btn">⏮</button>
-                <button class="control-btn play-btn" id="play-btn">▶</button>
-                <button class="control-btn" id="next-btn">⏭</button>
-                
-                <div class="volume-control">
-                    <button class="control-btn" id="mute-btn">🔊</button>
-                    <input type="range" id="volume" min="0" max="1" step="0.1" value="0.7">
-                </div>
-            </div>
+        <div class="audio-container">
+            <iframe width="100%" height="200" src="https://www.youtube.com/embed/8zvxqKhWE9o?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         
-        <div class="lyrics-container" id="lyrics">
-            <!-- Lirik akan dimuat via JavaScript -->
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div class="time-display">
+            <span id="current-time">0:00</span>
+            <span id="total-time">3:55</span>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" id="prev-btn">⏮</button>
+            <button class="control-btn play-pause" id="play-btn">▶</button>
+            <button class="control-btn" id="next-btn">⏭</button>
+        </div>
+        
+        <div class="lyrics-container" id="lyrics-container">
+            <div class="lyric-line" data-time="9">Monokrom, hidupku sebelum kau datang</div>
+            <div class="lyric-line" data-time="13">Kau bawa pelangi, kau bawa warna</div>
+            <div class="lyric-line" data-time="17">Kau bawa cinta, kau bawa bahagia</div>
+            <div class="lyric-line" data-time="22">Kau bawa dirimu yang sempurna</div>
+            
+            <div class="lyric-line" data-time="26">Kau ubah aku yang dulu sendiri</div>
+            <div class="lyric-line" data-time="30">Jadi manusia yang mau mengerti</div>
+            <div class="lyric-line" data-time="34">Kau ubah aku yang dulu tak peduli</div>
+            <div class="lyric-line" data-time="38">Jadi manusia yang mau mencintai</div>
+            
+            <div class="lyric-line" data-time="43">Dan bila esok, atau nanti</div>
+            <div class="lyric-line" data-time="47">Kau tiada lagi di sini</div>
+            <div class="lyric-line" data-time="51">Aku 'kan tetap, seperti ini</div>
+            <div class="lyric-line" data-time="55">Tetap mencintai, tetap setia</div>
+            
+            <div class="lyric-line" data-time="60">Monokrom, hidupku bila kau pergi</div>
+            <div class="lyric-line" data-time="64">Tak ada pelangi, tak ada warna</div>
+            <div class="lyric-line" data-time="68">Tak ada cinta, tak ada bahagia</div>
+            <div class="lyric-line" data-time="72">Tak ada dirimu yang sempurna</div>
+            
+            <div class="lyric-line" data-time="77">Dan bila esok, atau nanti</div>
+            <div class="lyric-line" data-time="81">Kau tiada lagi di sini</div>
+            <div class="lyric-line" data-time="85">Aku 'kan tetap, seperti ini</div>
+            <div class="lyric-line" data-time="89">Tetap mencintai, tetap setia</div>
+            
+            <div class="lyric-line" data-time="94">Monokrom, hidupku bila kau pergi</div>
+            <div class="lyric-line" data-time="98">Tak ada pelangi, tak ada warna</div>
+            <div class="lyric-line" data-time="102">Tak ada cinta, tak ada bahagia</div>
+            <div class="lyric-line" data-time="106">Tak ada dirimu yang sempurna</div>
+            
+            <div class="lyric-line" data-time="111">Monokrom, hidupku bila kau pergi</div>
+            <div class="lyric-line" data-time="115">Monokrom, hidupku bila kau pergi</div>
         </div>
     </div>
-    
-    <div class="sunset"></div>
 
     <script>
-        // Data lirik dengan timestamp (dalam detik)
-        const lyricsData = [
-            { time: 0, text: "Di ujung senja yang perlahan pudar" },
-            { time: 4, text: "Kutemukan dirimu dalam bayang" },
-            { time: 8, text: "Setiap detik yang kita lewati" },
-            { time: 12, text: "Kini tinggal cerita yang terpendam" },
-            { time: 16, text: "" },
-            { time: 18, text: "Reff:" },
-            { time: 20, text: "Dan ku akan menceritakanmu" },
-            { time: 24, text: "Pada bintang-bintang di langit" },
-            { time: 28, text: "Tentang cinta yang tak sampai" },
-            { time: 32, text: "Di batas senja yang memisahkan kita" },
-            { time: 36, text: "" },
-            { time: 38, text: "Takkan pernah kulupa setiap tawa" },
-            { time: 42, text: "Yang pernah kau berikan untukku" },
-            { time: 46, text: "Meski kini kau pergi menjauh" },
-            { time: 50, text: "Cintamu tetap hidup dalam ingatanku" },
-            { time: 54, text: "" },
-            { time: 56, text: "Reff:" },
-            { time: 58, text: "Dan ku akan menceritakanmu" },
-            { time: 62, text: "Pada bintang-bintang di langit" },
-            { time: 66, text: "Tentang cinta yang tak sampai" },
-            { time: 70, text: "Di batas senja yang memisahkan kita" },
-            { time: 74, text: "" }
-        ];
-
-        // Elemen DOM
-        const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('play-btn');
-        const progressBar = document.getElementById('progress-bar');
-        const progressContainer = document.getElementById('progress-container');
-        const currentTimeEl = document.getElementById('current-time');
-        const durationEl = document.getElementById('duration');
-        const lyricsContainer = document.getElementById('lyrics');
-        const volumeControl = document.getElementById('volume');
-        const muteBtn = document.getElementById('mute-btn');
-
-        // Muat lirik ke container
-        function loadLyrics() {
-            lyricsData.forEach(line => {
-                const lyricLine = document.createElement('div');
-                lyricLine.classList.add('lyrics-line');
-                lyricLine.textContent = line.text;
-                lyricLine.dataset.time = line.time;
-                lyricsContainer.appendChild(lyricLine);
-            });
-        }
-
-        // Format waktu (detik ke menit:detik)
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-
-        // Update progress bar
-        function updateProgress() {
-            const { currentTime, duration } = audio;
-            const progressPercent = (currentTime / duration) * 100;
-            progressBar.style.width = `${progressPercent}%`;
-            currentTimeEl.textContent = formatTime(currentTime);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const lyricsContainer = document.getElementById('lyrics-container');
+            const lyricLines = document.querySelectorAll('.lyric-line');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const currentTimeEl = document.getElementById('current-time');
+            const totalTimeEl = document.getElementById('total-time');
+            const playBtn = document.getElementById('play-btn');
             
-            // Update lirik yang aktif
-            updateActiveLyric(currentTime);
-        }
-
-        // Set progress bar ketika diklik
-        function setProgress(e) {
-            const width = this.clientWidth;
-            const clickX = e.offsetX;
-            const duration = audio.duration;
-            audio.currentTime = (clickX / width) * duration;
-        }
-
-        // Update lirik yang aktif berdasarkan waktu
-        function updateActiveLyric(currentTime) {
-            const lyricLines = document.querySelectorAll('.lyrics-line');
-            let activeIndex = -1;
+            // YouTube iframe API
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
             
-            // Cari lirik yang sesuai dengan waktu saat ini
-            for (let i = 0; i < lyricsData.length; i++) {
-                if (currentTime >= lyricsData[i].time) {
-                    activeIndex = i;
+            let player;
+            let isPlaying = false;
+            let updateInterval;
+            
+            // YouTube Player API
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player(document.querySelector('iframe'), {
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+            
+            function onPlayerReady(event) {
+                // Set total time
+                const duration = player.getDuration();
+                totalTimeEl.textContent = formatTime(duration);
+                
+                // Set up progress bar update
+                updateInterval = setInterval(updateProgress, 1000);
+            }
+            
+            function onPlayerStateChange(event) {
+                if (event.data === YT.PlayerState.PLAYING) {
+                    isPlaying = true;
+                    playBtn.textContent = '⏸';
                 } else {
-                    break;
+                    isPlaying = false;
+                    playBtn.textContent = '▶';
                 }
             }
             
-            // Update kelas aktif
-            lyricLines.forEach((line, index) => {
-                line.classList.remove('active-lyric');
-                if (index === activeIndex && line.textContent.trim() !== '') {
-                    line.classList.add('active-lyric');
+            // Format time (seconds to MM:SS)
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+            
+            // Update progress bar and current time
+            function updateProgress() {
+                if (isPlaying) {
+                    const currentTime = player.getCurrentTime();
+                    const duration = player.getDuration();
                     
-                    // Scroll ke lirik yang aktif (dengan offset)
-                    const container = document.getElementById('lyrics');
-                    const lineTop = line.offsetTop;
-                    const containerHeight = container.clientHeight;
-                    container.scrollTo({
-                        top: lineTop - containerHeight / 3,
-                        behavior: 'smooth'
+                    // Update progress bar
+                    const progressPercent = (currentTime / duration) * 100;
+                    progressBar.style.width = `${progressPercent}%`;
+                    
+                    // Update current time display
+                    currentTimeEl.textContent = formatTime(currentTime);
+                    
+                    // Highlight current lyric
+                    highlightLyric(currentTime);
+                }
+            }
+            
+            // Highlight the current lyric line
+            function highlightLyric(currentTime) {
+                let activeLine = null;
+                
+                lyricLines.forEach(line => {
+                    line.classList.remove('active');
+                    const lineTime = parseFloat(line.getAttribute('data-time'));
+                    
+                    if (currentTime >= lineTime) {
+                        activeLine = line;
+                    }
+                });
+                
+                if (activeLine) {
+                    activeLine.classList.add('active');
+                    
+                    // Scroll to active line
+                    activeLine.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
                     });
                 }
-            });
-        }
-
-        // Play/pause audio
-        function togglePlay() {
-            if (audio.paused) {
-                audio.play();
-                playBtn.textContent = '⏸';
-            } else {
-                audio.pause();
-                playBtn.textContent = '▶';
             }
-        }
-
-        // Update tombol play/pause
-        function updatePlayBtn() {
-            playBtn.textContent = audio.paused ? '▶' : '⏸';
-        }
-
-        // Update waktu durasi
-        function updateDuration() {
-            durationEl.textContent = formatTime(audio.duration);
-        }
-
-        // Toggle mute
-        function toggleMute() {
-            audio.muted = !audio.muted;
-            muteBtn.textContent = audio.muted ? '🔇' : '🔊';
-        }
-
-        // Set volume
-        function setVolume() {
-            audio.volume = this.value;
-            audio.muted = false;
-            muteBtn.textContent = '🔊';
-        }
-
-        // Event listeners
-        playBtn.addEventListener('click', togglePlay);
-        audio.addEventListener('play', updatePlayBtn);
-        audio.addEventListener('pause', updatePlayBtn);
-        audio.addEventListener('timeupdate', updateProgress);
-        audio.addEventListener('ended', () => {
-            playBtn.textContent = '▶';
-            progressBar.style.width = '0%';
-            currentTimeEl.textContent = '0:00';
+            
+            // Click on progress bar to seek
+            progressContainer.addEventListener('click', (e) => {
+                const width = progressContainer.clientWidth;
+                const clickX = e.offsetX;
+                const duration = player.getDuration();
+                
+                const seekTime = (clickX / width) * duration;
+                player.seekTo(seekTime, true);
+            });
+            
+            // Play/pause button
+            playBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    player.pauseVideo();
+                } else {
+                    player.playVideo();
+                }
+            });
+            
+            // Previous button (go to start)
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                player.seekTo(0, true);
+            });
+            
+            // Next button (go to end)
+            document.getElementById('next-btn').addEventListener('click', () => {
+                player.seekTo(player.getDuration(), true);
+            });
+            
+            // Click on lyric to seek to that time
+            lyricLines.forEach(line => {
+                line.addEventListener('click', () => {
+                    const lineTime = parseFloat(line.getAttribute('data-time'));
+                    player.seekTo(lineTime, true);
+                });
+            });
         });
-        audio.addEventListener('loadedmetadata', updateDuration);
-        progressContainer.addEventListener('click', setProgress);
-        muteBtn.addEventListener('click', toggleMute);
-        volumeControl.addEventListener('input', setVolume);
-
-        // Inisialisasi
-        loadLyrics();
     </script>
 </body>
 </html>
