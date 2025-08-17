@@ -3,71 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aku, Kamu, Dan Samudra - Rebellion Rose | Audio + Lyrics</title>
+    <title>Lirik Lagu - Aku, Kamu, Dan Samudra</title>
     <style>
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: white;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1920x1080/?ocean,blue');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #fff;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            overflow-x: hidden;
+            align-items: center;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
-            max-width: 800px;
-            width: 90%;
-            padding: 30px;
-            background-color: rgba(0, 10, 30, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(0, 180, 255, 0.5);
-            margin: 20px 0;
         }
 
         h1 {
-            color: #00b4ff;
-            text-shadow: 0 0 10px rgba(0, 180, 255, 0.7);
+            text-align: center;
             margin-bottom: 5px;
-            font-size: 2.5em;
+            font-size: 2.2rem;
+            color: #4fc3f7;
         }
 
-        h2 {
-            color: #7fc7ff;
-            margin-top: 0;
-            font-size: 1.5em;
-            font-weight: normal;
+        .artist {
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #90caf9;
         }
 
         .audio-player {
             width: 100%;
-            margin: 20px 0;
+            margin-bottom: 20px;
         }
 
         audio {
             width: 100%;
-            border-radius: 50px;
-            box-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        audio::-webkit-media-controls-panel {
-            background-color: rgba(0, 30, 60, 0.8);
+        .lyrics-container {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            scroll-behavior: smooth;
+        }
+
+        .lyrics {
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 2;
+            transition: all 0.3s ease;
+        }
+
+        .current-line {
+            color: #4fc3f7;
+            font-weight: bold;
+            font-size: 1.3rem;
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
             border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        button:hover {
+            background-color: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .speed-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1976d2;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1565c0;
+        }
+
+        /* Audio player custom styling */
+        audio::-webkit-media-controls-panel {
+            background-color: #1976d2;
+            border-radius: 10px;
         }
 
         audio::-webkit-media-controls-play-button,
         audio::-webkit-media-controls-mute-button {
-            background-color: #00b4ff;
+            background-color: white;
             border-radius: 50%;
         }
 
@@ -75,362 +168,191 @@
         audio::-webkit-media-controls-time-remaining-display {
             color: white;
         }
-
-        .lyrics-container {
-            height: 300px;
-            overflow-y: hidden;
-            position: relative;
-            margin: 20px 0;
-            border-radius: 10px;
-            background-color: rgba(0, 20, 40, 0.5);
-            border: 1px solid rgba(0, 180, 255, 0.3);
-        }
-
-        .lyrics {
-            transition: transform 0.5s ease-out;
-            line-height: 1.8;
-            font-size: 1.2em;
-            padding: 15px;
-        }
-
-        .highlight {
-            color: #00b4ff;
-            font-weight: bold;
-            text-shadow: 0 0 5px rgba(0, 180, 255, 0.7);
-            font-size: 1.3em;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            background: rgba(0, 120, 255, 0.3);
-            color: white;
-            border: 1px solid #00b4ff;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1em;
-            min-width: 120px;
-        }
-
-        button:hover {
-            background: rgba(0, 120, 255, 0.5);
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(0, 180, 255, 0.5);
-        }
-
-        .speed-display {
-            margin-top: 15px;
-            font-size: 0.9em;
-            color: #7fc7ff;
-        }
-
-        .water-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(0,180,255,0.1)" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            background-size: cover;
-            opacity: 0.5;
-            animation: wave 10s linear infinite;
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 5px;
-            background-color: rgba(0, 60, 120, 0.5);
-            border-radius: 5px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #0077ff, #00b4ff);
-            border-radius: 5px;
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        @keyframes wave {
-            0% { background-position-x: 0; }
-            100% { background-position-x: 1440px; }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            h2 {
-                font-size: 1.2em;
-            }
-            
-            .lyrics {
-                font-size: 1em;
-                padding: 10px;
-            }
-            
-            button {
-                padding: 8px 15px;
-                min-width: 100px;
-                font-size: 0.9em;
-            }
-            
-            .lyrics-container {
-                height: 250px;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="water-effect"></div>
     <div class="container">
-        <h1>Rebellion Rose</h1>
-        <h2>Aku, Kamu, Dan Samudra</h2>
+        <h1>Aku, Kamu, Dan Samudra</h1>
+        <div class="artist">Rebellion Rose | Speed Up</div>
         
         <div class="audio-player">
-            <audio id="audio" controls>
-                <!-- Ganti dengan sumber audio Anda -->
+            <audio id="audioPlayer" controls>
                 <source src="biasa samudra.mp3" type="audio/mpeg">
                 Browser Anda tidak mendukung elemen audio.
             </audio>
-            <div class="progress-container" id="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
         </div>
         
         <div class="lyrics-container">
             <div class="lyrics" id="lyrics">
-                <p>[Intro]</p>
-                <p>Bersamamu, aku tenggelam</p>
-                <p>Dalam samudra yang tak bertepi</p>
-                <p>Gelombang membawa kita</p>
-                <p>Jauh dari dunia yang fana</p>
-                <br>
-                <p>[Verse 1]</p>
-                <p>Aku dan kamu, dua pemberontak</p>
-                <p>Melawan arus yang ingin memisahkan</p>
-                <p>Dalam setiap tarikan nafas</p>
-                <p>Kita ciptakan dunia baru</p>
-                <br>
-                <p class="highlight">[Chorus]</p>
-                <p class="highlight">Aku, kamu, dan samudra yang biru</p>
-                <p class="highlight">Tak ada yang bisa memisahkan kita berdua</p>
-                <p class="highlight">Bahkan badai sekalipun</p>
-                <p class="highlight">Takkan mampu menghentikan cinta kita</p>
-                <br>
-                <p>[Verse 2]</p>
-                <p>Matahari terbenam, bulan muncul</p>
-                <p>Kita masih di sini, tak bergeming</p>
-                <p>Ombak menghantam, angin menderu</p>
-                <p>Tapi kita tetap berdiri tegak</p>
-                <br>
-                <p class="highlight">[Chorus]</p>
-                <p class="highlight">Aku, kamu, dan samudra yang biru</p>
-                <p class="highlight">Tak ada yang bisa memisahkan kita berdua</p>
-                <p class="highlight">Bahkan badai sekalipun</p>
-                <p class="highlight">Takkan mampu menghentikan cinta kita</p>
-                <br>
-                <p>[Bridge]</p>
-                <p>Jika dunia ini akhirnya tenggelam</p>
-                <p>Kita akan berenang melintasi waktu</p>
-                <p>Menemukan pulau yang hanya milik kita</p>
-                <p>Di mana tak ada lagi yang memisahkan</p>
-                <br>
-                <p>[Outro]</p>
-                <p>Bersamamu, aku tenggelam</p>
-                <p>Dalam samudra cinta yang abadi</p>
-                <p>Dan kita akan terus melawan</p>
-                <p>Sampai akhir waktu...</p>
+                <!-- Lirik akan dimuat di sini -->
             </div>
         </div>
         
         <div class="controls">
-            <button id="speedUp">Speed Up ↑</button>
-            <button id="slowDown">Slow Down ↓</button>
-            <button id="resetSpeed">Reset Speed</button>
-            <button id="syncBtn">Sync with Audio</button>
+            <button id="playBtn">▶ Play</button>
+            <button id="pauseBtn">⏸ Pause</button>
+            <button id="resetBtn">↻ Reset</button>
         </div>
         
-        <div class="speed-display">
-            Kecepatan: <span id="speedValue">1</span>x
+        <div class="speed-control">
+            <span>Kecepatan:</span>
+            <select id="speedSelect">
+                <option value="0.5">0.5x</option>
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+            </select>
         </div>
     </div>
 
     <script>
-        // Elemen DOM
-        const audio = document.getElementById('audio');
-        const lyrics = document.getElementById('lyrics');
-        const speedUpBtn = document.getElementById('speedUp');
-        const slowDownBtn = document.getElementById('slowDown');
-        const resetSpeedBtn = document.getElementById('resetSpeed');
-        const syncBtn = document.getElementById('syncBtn');
-        const speedValue = document.getElementById('speedValue');
-        const progressBar = document.getElementById('progress-bar');
-        const progressContainer = document.getElementById('progress-container');
-        
-        // Variabel kontrol
-        let scrollSpeed = 1;
-        let scrollInterval;
-        let isSynced = false;
-        
-        // Array untuk timestamp lirik (dalam detik)
-        // Anda perlu menyesuaikan ini dengan lagu aslinya
-        const lyricsTiming = [
-            { start: 0, end: 5, line: 0 },    // Intro
-            { start: 5, end: 10, line: 1 },   // Bersamamu...
-            { start: 10, end: 15, line: 2 },  // Dalam samudra...
-            { start: 15, end: 20, line: 3 },  // Gelombang...
-            // Tambahkan timing untuk semua lirik
+        // Lirik lagu dengan timestamp (dalam detik)
+        const lyricsData = [
+            { time: 0, text: "Aku yang terjebak dalam waktu" },
+            { time: 4, text: "Berlari mengejar bayang semu" },
+            { time: 8, text: "Kau yang hadir di antara biru" },
+            { time: 12, text: "Membawa warna dalam hidupku" },
+            { time: 16, text: "" },
+            { time: 18, text: "Dan kita berdua, melawan arus" },
+            { time: 22, text: "Menari di antara riak gelombang" },
+            { time: 26, text: "Tak peduli seberapa dalam jurang" },
+            { time: 30, text: "Asal kita bersama, aku tak gentar" },
+            { time: 34, text: "" },
+            { time: 36, text: "Aku, kamu, dan samudra" },
+            { time: 40, text: "Yang menyatukan kita berdua" },
+            { time: 44, text: "Takkan ada yang bisa memisah" },
+            { time: 48, text: "Walau dunia mencoba menghancurkan" },
+            { time: 52, text: "" },
+            { time: 54, text: "Aku, kamu, dan samudra" },
+            { time: 58, text: "Yang menjadi saksi cinta kita" },
+            { time: 62, text: "Di antara bintang dan bulan purnama" },
+            { time: 66, text: "Kita abadi selamanya" },
+            { time: 70, text: "" },
+            { time: 72, text: "Dan jika nanti kita terpisah" },
+            { time: 76, text: "Jarak dan waktu takkan berarti" },
+            { time: 80, text: "Karena di dalam hati" },
+            { time: 84, text: "Kita tetap satu jiwa" },
+            { time: 88, text: "" },
+            { time: 90, text: "Aku, kamu, dan samudra" },
+            { time: 94, text: "Yang menyatukan kita berdua" },
+            { time: 98, text: "Takkan ada yang bisa memisah" },
+            { time: 102, text: "Walau dunia mencoba menghancurkan" },
+            { time: 106, text: "" },
+            { time: 108, text: "Aku, kamu, dan samudra" },
+            { time: 112, text: "Yang menjadi saksi cinta kita" },
+            { time: 116, text: "Di antara bintang dan bulan purnama" },
+            { time: 120, text: "Kita abadi selamanya" }
         ];
+
+        // Elemen DOM
+        const lyricsElement = document.getElementById('lyrics');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const speedSelect = document.getElementById('speedSelect');
+        const audioPlayer = document.getElementById('audioPlayer');
         
-        // Fungsi untuk memulai scroll lirik
-        function startScrolling() {
-            stopScrolling();
-            
-            scrollInterval = setInterval(() => {
-                const currentPosition = lyrics.parentElement.scrollTop;
-                lyrics.parentElement.scrollTop = currentPosition + scrollSpeed;
-                
-                // Jika sudah sampai akhir, kembali ke atas
-                if (currentPosition >= lyrics.scrollHeight - lyrics.parentElement.clientHeight) {
-                    lyrics.parentElement.scrollTop = 0;
+        // Variabel state
+        let currentLine = 0;
+        let intervalId = null;
+        let speed = 1;
+        
+        // Tampilkan semua lirik
+        function displayLyrics() {
+            lyricsElement.innerHTML = '';
+            lyricsData.forEach((lineData, index) => {
+                const lineElement = document.createElement('div');
+                lineElement.textContent = lineData.text;
+                if (index === currentLine) {
+                    lineElement.classList.add('current-line');
                 }
-            }, 50);
-        }
-        
-        // Fungsi untuk menghentikan scroll
-        function stopScrolling() {
-            clearInterval(scrollInterval);
-        }
-        
-        // Fungsi untuk sync lirik dengan audio
-        function syncLyrics() {
-            if (!isSynced) {
-                isSynced = true;
-                syncBtn.textContent = "Unsync";
-                syncBtn.style.backgroundColor = "rgba(0, 180, 255, 0.7)";
-                
-                // Update lirik berdasarkan waktu audio
-                audio.addEventListener('timeupdate', highlightCurrentLyric);
-            } else {
-                isSynced = false;
-                syncBtn.textContent = "Sync with Audio";
-                syncBtn.style.backgroundColor = "rgba(0, 120, 255, 0.3)";
-                audio.removeEventListener('timeupdate', highlightCurrentLyric);
-                
-                // Reset semua highlight
-                const allLines = lyrics.querySelectorAll('p');
-                allLines.forEach(line => {
-                    line.style.backgroundColor = 'transparent';
-                    line.style.color = '';
-                });
-            }
-        }
-        
-        // Fungsi untuk highlight lirik yang sedang aktif
-        function highlightCurrentLyric() {
-            const currentTime = audio.currentTime;
-            const allLines = lyrics.querySelectorAll('p');
-            
-            // Reset semua highlight terlebih dahulu
-            allLines.forEach(line => {
-                line.style.backgroundColor = 'transparent';
-                line.style.color = '';
+                lyricsElement.appendChild(lineElement);
             });
             
-            // Cari lirik yang sesuai dengan waktu saat ini
-            for (let i = 0; i < lyricsTiming.length; i++) {
-                if (currentTime >= lyricsTiming[i].start && currentTime < lyricsTiming[i].end) {
-                    const currentLine = allLines[lyricsTiming[i].line];
-                    if (currentLine) {
-                        currentLine.style.backgroundColor = 'rgba(0, 180, 255, 0.3)';
-                        currentLine.style.color = '#00ffff';
-                        
-                        // Scroll ke lirik yang sedang aktif
-                        currentLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                    break;
-                }
+            // Scroll ke baris saat ini
+            const currentLineElement = lyricsElement.children[currentLine];
+            if (currentLineElement) {
+                currentLineElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
         
-        // Fungsi untuk update progress bar
-        function updateProgress() {
-            const progressPercent = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = `${progressPercent}%`;
+        // Cari baris lirik berdasarkan waktu
+        function findCurrentLine(time) {
+            for (let i = lyricsData.length - 1; i >= 0; i--) {
+                if (time >= lyricsData[i].time) {
+                    return i;
+                }
+            }
+            return 0;
         }
         
-        // Fungsi untuk set progress bar ketika diklik
-        function setProgress(e) {
-            const width = this.clientWidth;
-            const clickX = e.offsetX;
-            const duration = audio.duration;
-            audio.currentTime = (clickX / width) * duration;
+        // Update lirik berdasarkan waktu audio
+        function updateLyrics() {
+            const currentTime = audioPlayer.currentTime;
+            const newLine = findCurrentLine(currentTime);
+            
+            if (newLine !== currentLine) {
+                currentLine = newLine;
+                displayLyrics();
+            }
+            
+            // Jika audio masih berjalan, terus update
+            if (!audioPlayer.paused) {
+                requestAnimationFrame(updateLyrics);
+            }
+        }
+        
+        // Mulai pemutaran
+        function playLyrics() {
+            audioPlayer.play();
+            updateLyrics();
+        }
+        
+        // Jeda pemutaran
+        function pauseLyrics() {
+            audioPlayer.pause();
+        }
+        
+        // Reset pemutaran
+        function resetLyrics() {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            currentLine = 0;
+            displayLyrics();
         }
         
         // Event listeners
-        speedUpBtn.addEventListener('click', () => {
-            scrollSpeed = Math.min(scrollSpeed + 0.5, 5);
-            speedValue.textContent = scrollSpeed.toFixed(1);
-            if (!isSynced) startScrolling();
+        playBtn.addEventListener('click', playLyrics);
+        pauseBtn.addEventListener('click', pauseLyrics);
+        resetBtn.addEventListener('click', resetLyrics);
+        
+        speedSelect.addEventListener('change', (e) => {
+            speed = parseFloat(e.target.value);
+            audioPlayer.playbackRate = speed;
         });
         
-        slowDownBtn.addEventListener('click', () => {
-            scrollSpeed = Math.max(scrollSpeed - 0.5, 0.5);
-            speedValue.textContent = scrollSpeed.toFixed(1);
-            if (!isSynced) startScrolling();
+        // Saat audio dimainkan
+        audioPlayer.addEventListener('play', () => {
+            updateLyrics();
         });
         
-        resetSpeedBtn.addEventListener('click', () => {
-            scrollSpeed = 1;
-            speedValue.textContent = scrollSpeed.toFixed(1);
-            if (!isSynced) startScrolling();
-        });
-        
-        syncBtn.addEventListener('click', syncLyrics);
-        
-        // Progress bar events
-        audio.addEventListener('timeupdate', updateProgress);
-        progressContainer.addEventListener('click', setProgress);
-        
-        // Mulai scrolling otomatis saat halaman dimuat
-        window.addEventListener('load', () => {
-            startScrolling();
-        });
-        
-        // Hentikan scrolling saat mouse berada di atas lyrics container
-        document.querySelector('.lyrics-container').addEventListener('mouseenter', stopScrolling);
-        document.querySelector('.lyrics-container').addEventListener('mouseleave', () => {
-            if (!isSynced) startScrolling();
-        });
-        
-        // Saat audio selesai, reset progress bar
-        audio.addEventListener('ended', () => {
-            progressBar.style.width = '0%';
-            if (isSynced) {
-                const allLines = lyrics.querySelectorAll('p');
-                allLines.forEach(line => {
-                    line.style.backgroundColor = 'transparent';
-                    line.style.color = '';
-                });
+        // Saat waktu audio berubah (misal ketika digeser)
+        audioPlayer.addEventListener('timeupdate', () => {
+            const newLine = findCurrentLine(audioPlayer.currentTime);
+            if (newLine !== currentLine) {
+                currentLine = newLine;
+                displayLyrics();
             }
         });
+        
+        // Inisialisasi
+        displayLyrics();
+        
+        // Catatan: Untuk menggunakan audio, ganti URL di elemen <audio> dengan URL lagu yang valid
+        // Jika ingin menggunakan file lokal, bisa seperti ini:
+        // <source src="aku-kamu-dan-samudra.mp3" type="audio/mpeg">
     </script>
 </body>
 </html>
