@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animasi Bintang dengan Lirik Lagu</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a0a20;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+        
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--opacity); transform: scale(1); }
+        }
+        
+        .lyrics-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        #lyrics {
+            font-size: 22px;
+            line-height: 1.6;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .highlight {
+            color: #ff6bff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            font-weight: bold;
+        }
+        
+        .controls {
+            z-index: 1;
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6bff, #4dabff);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 255, 0.4);
+        }
+        
+        #progress-container {
+            width: 80%;
+            max-width: 600px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6bff, #4dabff);
+            transition: width 0.1s linear;
+        }
+        
+        .song-info {
+            margin-bottom: 20px;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .song-title {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #4dabff;
+        }
+        
+        .artist {
+            font-size: 16px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div id="stars-container"></div>
+    
+    <div class="song-info">
+        <div class="song-title">Perfect</div>
+        <div class="artist">Ed Sheeran</div>
+    </div>
+    
+    <div class="lyrics-container">
+        <div id="lyrics">Klik Play untuk memulai...</div>
+    </div>
+    
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+    
+    <div class="controls">
+        <button id="playBtn">Play</button>
+        <button id="restartBtn">Restart</button>
+    </div>
+
+    <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <script>
+        // Inisialisasi elemen
+        const starsContainer = document.getElementById('stars-container');
+        const lyricsElement = document.getElementById('lyrics');
+        const playBtn = document.getElementById('playBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const audio = document.getElementById('audio');
+        const progressBar = document.getElementById('progress-bar');
+        
+        // Data lirik dengan timestamp (dalam detik)
+        const songData = {
+            title: "Perfect",
+            artist: "Ed Sheeran",
+            lyrics: [
+                { time: 0, text: "I found a love for me" },
+                { time: 3, text: "Darling, just dive right in" },
+                { time: 6, text: "And follow my lead" },
+                { time: 9, text: "Well, I found a girl, beautiful and sweet" },
+                { time: 13, text: "Oh, I never knew you were the someone waiting for me" },
+                { time: 19, text: "'Cause we were just kids when we fell in love" },
+                { time: 23, text: "Not knowing what it was" },
+                { time: 26, text: "I will not give you up this time" },
+                { time: 30, text: "But darling, just kiss me slow" },
+                { time: 33, text: "Your heart is all I own" },
+                { time: 36, text: "And in your eyes, you're holding mine" }
+            ]
+        };
+        
+        // Buat bintang-bintang
+        function createStars() {
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random properties
+                const size = Math.random() * 3;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const opacity = Math.random() * 0.8 + 0.2;
+                const duration = Math.random() * 5 + 3 + 's';
+                const delay = Math.random() * 5 + 's';
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.setProperty('--opacity', opacity);
+                star.style.setProperty('--duration', duration);
+                star.style.animationDelay = delay;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Update lirik berdasarkan waktu
+        function updateLyrics() {
+            const currentTime = audio.currentTime;
+            let currentLyric = { text: "" };
+            
+            // Cari lirik yang sesuai dengan waktu saat ini
+            for (let i = 0; i < songData.lyrics.length; i++) {
+                if (currentTime >= songData.lyrics[i].time) {
+                    currentLyric = songData.lyrics[i];
+                } else {
+                    break;
+                }
+            }
+            
+            lyricsElement.innerHTML = currentLyric.text;
+            
+            // Update progress bar
+            const progress = (currentTime / audio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // Event listeners
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "Pause";
+            } else {
+                audio.pause();
+                playBtn.textContent = "Play";
+            }
+        });
+        
+        restartBtn.addEventListener('click', () => {
+            audio.currentTime = 0;
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "Pause";
+            }
+        });
+        
+        audio.addEventListener('timeupdate', updateLyrics);
+        
+        audio.addEventListener('ended', () => {
+            playBtn.textContent = "Play";
+        });
+        
+        // Klik progress bar untuk seek
+        progressContainer.addEventListener('click', (e) => {
+            const percent = e.offsetX / progressContainer.offsetWidth;
+            audio.currentTime = percent * audio.duration;
+        });
+        
+        // Inisialisasi
+        createStars();
+        
+        // Update song info
+        document.querySelector('.song-title').textContent = songData.title;
+        document.querySelector('.artist').textContent = songData.artist;
+    </script>
+</body>
+</html>
