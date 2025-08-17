@@ -117,7 +117,7 @@
             100% { transform: rotate(360deg) translateX(240px) rotate(-360deg); }
         }
         
-        /* Bintang-bintang berkedip */
+        /* Bintang-bintang kecil */
         #stars-container {
             position: fixed;
             top: 0;
@@ -138,6 +138,17 @@
         @keyframes twinkle {
             0%, 100% { opacity: 0; transform: scale(0.5); }
             50% { opacity: var(--opacity); transform: scale(1); }
+        }
+        
+        /* Container untuk gambar-gambar lucu */
+        #cute-images-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
         
         /* Container lirik dan kontrol */
@@ -228,6 +239,35 @@
             font-size: 16px;
             color: #aaa;
         }
+        
+        /* Style untuk gambar lucu */
+        .cute-image {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            animation: float 15s infinite linear;
+            opacity: 0.7;
+            z-index: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -242,6 +282,9 @@
     
     <!-- Bintang-bintang berkedip -->
     <div id="stars-container"></div>
+    
+    <!-- Container untuk gambar-gambar lucu -->
+    <div id="cute-images-container"></div>
     
     <!-- Konten utama -->
     <div class="song-info">
@@ -262,11 +305,12 @@
         <button id="restartBtn">Restart</button>
     </div>
 
-    <audio id="audio" src="https://www.youtube.com/embed/cNGjD0VG4R8?autoplay=1"></audio>
+    <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
     <script>
         // Inisialisasi elemen
         const starsContainer = document.getElementById('stars-container');
+        const cuteContainer = document.getElementById('cute-images-container');
         const lyricsElement = document.getElementById('lyrics');
         const playBtn = document.getElementById('playBtn');
         const restartBtn = document.getElementById('restartBtn');
@@ -274,47 +318,32 @@
         const progressBar = document.getElementById('progress-bar');
         const progressContainer = document.getElementById('progress-container');
         
-        // Data lirik dengan timestamp (dalam detik) - disesuaikan dengan versi YouTube
+        // Daftar gambar lucu
+        const cuteImages = [
+            'https://i.pinimg.com/originals/2e/60/07/2e60079f1e36b5c7689f876b35a620af.png',
+            'https://clipart-library.com/images/8ixKbxj8T.png',
+            'https://www.freepnglogos.com/uploads/cute-png/cute-png-hello-kitty-png-image-pngpix-0.png',
+            'https://www.pngmart.com/files/15/Cute-Pikachu-PNG-Transparent-Image.png',
+            'https://www.pngmart.com/files/15/Cute-Panda-PNG-Pic.png',
+            'https://www.pngmart.com/files/15/Cute-Kitten-PNG-Transparent-Image.png'
+        ];
+        
+        // Data lirik dengan timestamp (dalam detik)
         const songData = {
             title: "Perfect",
             artist: "Ed Sheeran",
             lyrics: [
-                { time: 12, text: "I found a love for me" },
-                { time: 16, text: "Darling, just dive right in" },
-                { time: 20, text: "And follow my lead" },
-                { time: 24, text: "Well, I found a girl, beautiful and sweet" },
-                { time: 29, text: "Oh, I never knew you were the someone waiting for me" },
-                { time: 37, text: "'Cause we were just kids when we fell in love" },
-                { time: 42, text: "Not knowing what it was" },
-                { time: 46, text: "I will not give you up this time" },
-                { time: 51, text: "But darling, just kiss me slow" },
-                { time: 55, text: "Your heart is all I own" },
-                { time: 59, text: "And in your eyes, you're holding mine" },
-                { time: 64, text: "Baby, I'm dancing in the dark" },
-                { time: 68, text: "With you between my arms" },
-                { time: 72, text: "Barefoot on the grass" },
-                { time: 76, text: "Listening to our favorite song" },
-                { time: 81, text: "When you said you looked a mess" },
-                { time: 85, text: "I whispered underneath my breath" },
-                { time: 89, text: "But you heard it" },
-                { time: 93, text: "Darling, you look perfect tonight" },
-                { time: 104, text: "Well, I found a woman, stronger than anyone I know" },
-                { time: 109, text: "She shares my dreams, I hope that someday I'll share her home" },
-                { time: 117, text: "I found a lover, to carry more than just my secrets" },
-                { time: 122, text: "To carry love, to carry children of our own" },
-                { time: 130, text: "We are still kids, but we're so in love" },
-                { time: 134, text: "Fighting against all odds" },
-                { time: 138, text: "I know we'll be alright this time" },
-                { time: 143, text: "Darling, just hold my hand" },
-                { time: 147, text: "Be my girl, I'll be your man" },
-                { time: 151, text: "I see my future in your eyes" },
-                { time: 160, text: "Baby, I'm dancing in the dark" },
-                { time: 164, text: "With you between my arms" },
-                { time: 168, text: "Barefoot on the grass" },
-                { time: 172, text: "Listening to our favorite song" },
-                { time: 177, text: "When I saw you in that dress, looking so beautiful" },
-                { time: 181, text: "I don't deserve this" },
-                { time: 185, text: "Darling, you look perfect tonight" }
+                { time: 0, text: "I found a love for me" },
+                { time: 3, text: "Darling, just dive right in" },
+                { time: 6, text: "And follow my lead" },
+                { time: 9, text: "Well, I found a girl, beautiful and sweet" },
+                { time: 13, text: "Oh, I never knew you were the someone waiting for me" },
+                { time: 19, text: "'Cause we were just kids when we fell in love" },
+                { time: 23, text: "Not knowing what it was" },
+                { time: 26, text: "I will not give you up this time" },
+                { time: 30, text: "But darling, just kiss me slow" },
+                { time: 33, text: "Your heart is all I own" },
+                { time: 36, text: "And in your eyes, you're holding mine" }
             ]
         };
         
@@ -344,6 +373,35 @@
                 
                 starsContainer.appendChild(star);
             }
+        }
+        
+        // Buat gambar-gambar lucu yang muncul secara acak
+        function createCuteImages() {
+            setInterval(() => {
+                const img = document.createElement('img');
+                img.classList.add('cute-image');
+                img.src = cuteImages[Math.floor(Math.random() * cuteImages.length)];
+                
+                // Random properties
+                const size = Math.random() * 80 + 50;
+                const x = Math.random() * 100;
+                const duration = Math.random() * 10 + 10 + 's';
+                const delay = Math.random() * 5 + 's';
+                
+                img.style.width = `${size}px`;
+                img.style.height = `${size}px`;
+                img.style.left = `${x}%`;
+                img.style.bottom = `-${size}px`;
+                img.style.animationDuration = duration;
+                img.style.animationDelay = delay;
+                
+                cuteContainer.appendChild(img);
+                
+                // Hapus gambar setelah animasi selesai
+                setTimeout(() => {
+                    img.remove();
+                }, parseFloat(duration) * 1000);
+            }, 1500);
         }
         
         // Update lirik berdasarkan waktu
@@ -400,6 +458,7 @@
         
         // Inisialisasi
         createStars();
+        createCuteImages();
         
         // Update song info
         document.querySelector('.song-title').textContent = songData.title;
