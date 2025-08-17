@@ -108,6 +108,7 @@
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         button {
@@ -122,6 +123,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 0.9rem;
         }
 
         button:hover {
@@ -152,6 +154,20 @@
         .highlight {
             color: var(--highlight);
             font-weight: 600;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+
+        .current-line {
+            color: var(--highlight);
+            font-weight: bold;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
         }
 
         .progress-container {
@@ -179,6 +195,19 @@
             margin-top: 0.5rem;
         }
 
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .volume-control input[type="range"] {
+            width: 100px;
+            cursor: pointer;
+        }
+
         footer {
             text-align: center;
             margin-top: 3rem;
@@ -199,29 +228,16 @@
             .container {
                 padding: 1.5rem;
             }
+            
+            .controls {
+                gap: 0.5rem;
+            }
+            
+            button {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
         }
-
-        /* Animasi teks */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .lyrics p {
-            animation: fadeIn 0.5s ease forwards;
-            opacity: 0;
-        }
-
-        .lyrics p:nth-child(1) { animation-delay: 0.1s; }
-        .lyrics p:nth-child(2) { animation-delay: 0.2s; }
-        .lyrics p:nth-child(3) { animation-delay: 0.3s; }
-        .lyrics p:nth-child(4) { animation-delay: 0.4s; }
-        .lyrics p:nth-child(5) { animation-delay: 0.5s; }
-        .lyrics p:nth-child(6) { animation-delay: 0.6s; }
-        .lyrics p:nth-child(7) { animation-delay: 0.7s; }
-        .lyrics p:nth-child(8) { animation-delay: 0.8s; }
-        .lyrics p:nth-child(9) { animation-delay: 0.9s; }
-        .lyrics p:nth-child(10) { animation-delay: 1s; }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -239,7 +255,8 @@
             
             <div class="controls">
                 <button id="playBtn"><i class="fas fa-play"></i> Putar</button>
-                <button id="speedBtn"><i class="fas fa-tachometer-alt"></i> Speed Up</button>
+                <button id="speedBtn"><i class="fas fa-tachometer-alt"></i> Kecepatan Normal</button>
+                <button id="restartBtn"><i class="fas fa-redo"></i> Ulang</button>
             </div>
             
             <div class="progress-container">
@@ -249,20 +266,26 @@
                 <span id="currentTime">0:00</span>
                 <span id="duration">3:45</span>
             </div>
+            
+            <div class="volume-control">
+                <i class="fas fa-volume-down"></i>
+                <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7">
+                <i class="fas fa-volume-up"></i>
+            </div>
         </header>
 
         <div class="lyrics-container">
-            <div class="lyrics">
-                <p>Di tepian ini ku sendiri</p>
-                <p>Memandang luasnya samudra biru</p>
-                <p>Angin berhembus membawa rindu</p>
-                <p>Pada dirimu yang jauh di sana</p>
-                <p class="highlight">Aku, kamu, dan samudra</p>
-                <p class="highlight">Memisahkan tapi jua menyatukan</p>
-                <p>Gelombang yang datang dan pergi</p>
-                <p>Seperti detak jantung yang berdegup</p>
-                <p>Untukmu yang selalu kurindu</p>
-                <p>Di seberang samudra nan biru</p>
+            <div class="lyrics" id="lyrics">
+                <p data-time="0">Di tepian ini ku sendiri</p>
+                <p data-time="8">Memandang luasnya samudra biru</p>
+                <p data-time="16">Angin berhembus membawa rindu</p>
+                <p data-time="24">Pada dirimu yang jauh di sana</p>
+                <p data-time="32" class="highlight">Aku, kamu, dan samudra</p>
+                <p data-time="40" class="highlight">Memisahkan tapi jua menyatukan</p>
+                <p data-time="48">Gelombang yang datang dan pergi</p>
+                <p data-time="56">Seperti detak jantung yang berdegup</p>
+                <p data-time="64">Untukmu yang selalu kurindu</p>
+                <p data-time="72">Di seberang samudra nan biru</p>
             </div>
         </div>
 
@@ -271,103 +294,190 @@
         </footer>
     </div>
 
+    <audio id="audioPlayer" preload="metadata">
+        <!-- Audio akan dibuat secara dinamis melalui JavaScript -->
+    </audio>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const audioPlayer = document.getElementById('audioPlayer');
             const playBtn = document.getElementById('playBtn');
             const speedBtn = document.getElementById('speedBtn');
+            const restartBtn = document.getElementById('restartBtn');
             const progressBar = document.getElementById('progressBar');
             const currentTimeEl = document.getElementById('currentTime');
             const durationEl = document.getElementById('duration');
+            const volumeControl = document.getElementById('volumeControl');
+            const lyricsContainer = document.getElementById('lyrics');
+            const lyricLines = document.querySelectorAll('.lyrics p');
             
-            // Audio simulation (in a real app, you would use actual audio)
+            // Buat audio secara dinamis (simulasi)
+            // Catatan: Ini hanya simulasi, untuk implementasi nyata Anda perlu file audio asli
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            let audioBuffer;
+            let audioSource;
             let isPlaying = false;
-            let isSpedUp = false;
-            let progress = 0;
-            let interval;
-            const totalDuration = 225; // 3:45 in seconds
+            let playbackRate = 1.0;
+            let startTime = 0;
+            let pauseTime = 0;
+            let animationFrame;
             
-            // Format time from seconds to MM:SS
+            // Format waktu dari detik ke MM:SS
             function formatTime(seconds) {
                 const mins = Math.floor(seconds / 60);
                 const secs = Math.floor(seconds % 60);
                 return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
             }
             
-            // Update progress bar and time
+            // Update progress bar dan waktu
             function updateProgress() {
-                progress += 1;
-                if (progress > totalDuration) {
-                    progress = 0;
-                    clearInterval(interval);
-                    isPlaying = false;
-                    playBtn.innerHTML = '<i class="fas fa-play"></i> Putar';
-                }
+                if (!isPlaying) return;
                 
-                const percentage = (progress / totalDuration) * 100;
+                const currentTime = pauseTime + (audioContext.currentTime - startTime) * playbackRate;
+                const duration = audioPlayer.duration || 225; // 3:45 default jika tidak ada audio
+                const percentage = (currentTime / duration) * 100;
+                
                 progressBar.style.width = `${percentage}%`;
-                currentTimeEl.textContent = formatTime(progress);
+                currentTimeEl.textContent = formatTime(currentTime);
+                
+                // Highlight lirik yang sesuai
+                highlightLyric(currentTime);
+                
+                animationFrame = requestAnimationFrame(updateProgress);
             }
             
-            // Play/pause button
-            playBtn.addEventListener('click', function() {
+            // Highlight lirik berdasarkan waktu
+            function highlightLyric(currentTime) {
+                lyricLines.forEach((line, index) => {
+                    const lineTime = parseFloat(line.getAttribute('data-time'));
+                    const nextLineTime = index < lyricLines.length - 1 
+                        ? parseFloat(lyricLines[index + 1].getAttribute('data-time')) 
+                        : audioPlayer.duration || 225;
+                    
+                    if (currentTime >= lineTime && currentTime < nextLineTime) {
+                        line.classList.add('current-line');
+                    } else {
+                        line.classList.remove('current-line');
+                    }
+                });
+            }
+            
+            // Mulai atau jeda audio
+            function togglePlay() {
+                if (isPlaying) {
+                    // Jeda
+                    pauseTime += (audioContext.currentTime - startTime) * playbackRate;
+                    audioPlayer.pause();
+                    cancelAnimationFrame(animationFrame);
+                    playBtn.innerHTML = '<i class="fas fa-play"></i> Putar';
+                } else {
+                    // Mainkan
+                    startTime = audioContext.currentTime;
+                    audioPlayer.playbackRate = playbackRate;
+                    audioPlayer.currentTime = pauseTime;
+                    audioPlayer.play();
+                    animationFrame = requestAnimationFrame(updateProgress);
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i> Jeda';
+                }
                 isPlaying = !isPlaying;
+            }
+            
+            // Atur kecepatan pemutaran
+            function toggleSpeed() {
+                if (playbackRate === 1.0) {
+                    playbackRate = 1.5;
+                    speedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Kecepatan 1.5x';
+                } else {
+                    playbackRate = 1.0;
+                    speedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Kecepatan Normal';
+                }
                 
                 if (isPlaying) {
-                    playBtn.innerHTML = '<i class="fas fa-pause"></i> Jeda';
-                    interval = setInterval(updateProgress, 1000);
-                } else {
-                    playBtn.innerHTML = '<i class="fas fa-play"></i> Putar';
-                    clearInterval(interval);
+                    // Jika sedang bermain, perbarui kecepatan
+                    pauseTime += (audioContext.currentTime - startTime) * (playbackRate === 1.0 ? 1.5 : 1.0);
+                    startTime = audioContext.currentTime;
+                    audioPlayer.playbackRate = playbackRate;
                 }
-            });
+            }
             
-            // Speed up button
-            speedBtn.addEventListener('click', function() {
-                isSpedUp = !isSpedUp;
-                
-                if (isSpedUp) {
-                    speedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Normal';
-                    // In a real app, you would change playbackRate here
+            // Mulai ulang lagu
+            function restartSong() {
+                pauseTime = 0;
+                if (isPlaying) {
+                    startTime = audioContext.currentTime;
+                    audioPlayer.currentTime = 0;
                 } else {
-                    speedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Speed Up';
+                    audioPlayer.currentTime = 0;
+                    currentTimeEl.textContent = '0:00';
+                    progressBar.style.width = '0%';
+                    highlightLyric(0);
                 }
-            });
+            }
             
-            // Click on progress bar to seek
+            // Atur volume
+            function setVolume() {
+                audioPlayer.volume = volumeControl.value;
+            }
+            
+            // Klik pada progress bar untuk mencari
             progressBar.parentElement.addEventListener('click', function(e) {
                 const rect = this.getBoundingClientRect();
                 const pos = (e.clientX - rect.left) / rect.width;
-                progress = pos * totalDuration;
-                progressBar.style.width = `${pos * 100}%`;
-                currentTimeEl.textContent = formatTime(progress);
+                const duration = audioPlayer.duration || 225;
+                pauseTime = pos * duration;
                 
                 if (isPlaying) {
-                    clearInterval(interval);
-                    interval = setInterval(updateProgress, 1000);
+                    startTime = audioContext.currentTime;
+                    audioPlayer.currentTime = pauseTime;
+                } else {
+                    audioPlayer.currentTime = pauseTime;
+                    currentTimeEl.textContent = formatTime(pauseTime);
+                    progressBar.style.width = `${pos * 100}%`;
+                    highlightLyric(pauseTime);
                 }
             });
             
-            // Set initial duration
-            durationEl.textContent = formatTime(totalDuration);
+            // Event listeners
+            playBtn.addEventListener('click', togglePlay);
+            speedBtn.addEventListener('click', toggleSpeed);
+            restartBtn.addEventListener('click', restartSong);
+            volumeControl.addEventListener('input', setVolume);
             
-            // Highlight current lyric (simulation)
-            const lyrics = document.querySelectorAll('.lyrics p');
-            let currentLyric = 0;
-            
-            function highlightLyric() {
-                lyrics.forEach((line, index) => {
-                    if (index === currentLyric) {
-                        line.classList.add('highlight');
-                    } else {
-                        line.classList.remove('highlight');
-                    }
-                });
+            // Simulasi audio (dalam implementasi nyata, gunakan file audio asli)
+            // Ini hanya untuk demonstrasi UI
+            audioPlayer.volume = 0.7;
+            audioPlayer.addEventListener('timeupdate', function() {
+                if (!isPlaying) return;
+                const currentTime = audioPlayer.currentTime;
+                const duration = audioPlayer.duration || 225;
+                const percentage = (currentTime / duration) * 100;
                 
-                currentLyric = (currentLyric + 1) % lyrics.length;
-            }
+                progressBar.style.width = `${percentage}%`;
+                currentTimeEl.textContent = formatTime(currentTime);
+                highlightLyric(currentTime);
+            });
             
-            // Simulate lyric highlighting (every 10 seconds in this demo)
-            setInterval(highlightLyric, 10000);
+            audioPlayer.addEventListener('ended', function() {
+                isPlaying = false;
+                playBtn.innerHTML = '<i class="fas fa-play"></i> Putar';
+                pauseTime = 0;
+                progressBar.style.width = '0%';
+                currentTimeEl.textContent = '0:00';
+                cancelAnimationFrame(animationFrame);
+                
+                // Hapus highlight dari semua lirik
+                lyricLines.forEach(line => line.classList.remove('current-line'));
+            });
+            
+            // Set durasi awal
+            durationEl.textContent = '3:45';
+            
+            // Untuk demo, kita akan menggunakan audio sintetis
+            // Dalam implementasi nyata, uncomment baris berikut dan sediakan file audio:
+            // audioPlayer.src = 'path-to-your-audio-file.mp3';
+            // audioPlayer.addEventListener('loadedmetadata', function() {
+            //     durationEl.textContent = formatTime(audioPlayer.duration);
+            // });
         });
     </script>
 </body>
