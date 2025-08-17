@@ -1,113 +1,374 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfect - Ed Sheeran with Solar System</title>
+    <title>Aku, Kamu, Dan Samudra - Rebellion Rose | Lirik</title>
     <style>
-        /* [CSS tetap sama seperti sebelumnya] */
-    </style>
-</head>
-<body>
-    <!-- [HTML struktur tetap sama seperti sebelumnya] -->
+        :root {
+            --primary: #1a6fc9;
+            --secondary: #0a4a8a;
+            --text: #e6f1ff;
+            --highlight: #ffd700;
+            --wave-color: rgba(26, 111, 201, 0.3);
+        }
 
-    <!-- Audio Element -->
-    <audio id="audio" controls style="display: none;">
-        <source src="perfect.mp3" type="audio/mpeg">
-        Browser Anda tidak mendukung elemen audio.
-    </audio>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    <script>
-        // Inisialisasi elemen
-        const starsContainer = document.getElementById('stars-container');
-        const lyricsElement = document.getElementById('lyrics');
-        const playBtn = document.getElementById('playBtn');
-        const restartBtn = document.getElementById('restartBtn');
-        const audio = document.getElementById('audio');
-        const progressBar = document.getElementById('progress-bar');
-        const progressContainer = document.getElementById('progress-container');
-        
-        // Data lirik dengan timestamp (dalam detik) yang disesuaikan ritme dengan YouTube
-        const songData = {
-            title: "Perfect",
-            artist: "Ed Sheeran",
-            lyrics: [
-                // Verse 1
-                { time: 12.5, text: "I found a love for me" },
-                { time: 16.2, text: "Darling, just dive right in" },
-                { time: 20.0, text: "And follow my lead" },
-                { time: 24.3, text: "Well, I found a girl, beautiful and sweet" },
-                { time: 29.1, text: "Oh, I never knew you were the someone waiting for me" },
-                
-                // Pre-Chorus
-                { time: 37.4, text: "'Cause we were just kids when we fell in love" },
-                { time: 42.0, text: "Not knowing what it was" },
-                { time: 46.2, text: "I will not give you up this time" },
-                { time: 51.0, text: "But darling, just kiss me slow" },
-                { time: 55.3, text: "Your heart is all I own" },
-                { time: 59.5, text: "And in your eyes, you're holding mine" },
-                
-                // Chorus
-                { time: 64.2, text: "Baby, I'm dancing in the dark" },
-                { time: 68.0, text: "With you between my arms" },
-                { time: 72.3, text: "Barefoot on the grass" },
-                { time: 76.1, text: "Listening to our favorite song" },
-                { time: 81.2, text: "When you said you looked a mess" },
-                { time: 85.0, text: "I whispered underneath my breath" },
-                { time: 89.3, text: "But you heard it" },
-                { time: 93.1, text: "Darling, you look perfect tonight" },
-                
-                // Verse 2
-                { time: 104.5, text: "Well, I found a woman, stronger than anyone I know" },
-                { time: 109.2, text: "She shares my dreams, I hope that someday I'll share her home" },
-                { time: 117.4, text: "I found a lover, to carry more than just my secrets" },
-                { time: 122.1, text: "To carry love, to carry children of our own" },
-                
-                // Pre-Chorus
-                { time: 130.3, text: "We are still kids, but we're so in love" },
-                { time: 134.0, text: "Fighting against all odds" },
-                { time: 138.2, text: "I know we'll be alright this time" },
-                { time: 143.0, text: "Darling, just hold my hand" },
-                { time: 147.3, text: "Be my girl, I'll be your man" },
-                { time: 151.5, text: "I see my future in your eyes" },
-                
-                // Chorus
-                { time: 160.2, text: "Baby, I'm dancing in the dark" },
-                { time: 164.0, text: "With you between my arms" },
-                { time: 168.3, text: "Barefoot on the grass" },
-                { time: 172.1, text: "Listening to our favorite song" },
-                { time: 177.2, text: "When I saw you in that dress, looking so beautiful" },
-                { time: 181.0, text: "I don't deserve this" },
-                { time: 185.3, text: "Darling, you look perfect tonight" }
-            ]
-        };
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-        // [Fungsi createStars() tetap sama]
-        
-        // Update lirik berdasarkan waktu
-        function updateLyrics() {
-            const currentTime = audio.currentTime;
-            let currentLyric = { text: "" };
-            
-            // Cari lirik yang sesuai dengan waktu saat ini
-            for (let i = 0; i < songData.lyrics.length; i++) {
-                if (currentTime >= songData.lyrics[i].time) {
-                    currentLyric = songData.lyrics[i];
-                } else {
-                    break;
-                }
+        .ocean {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: var(--primary);
+            z-index: -1;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 100px;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%231a6fc9"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%231a6fc9"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%231a6fc9"/></svg>');
+            animation: wave 10s linear infinite;
+            transform: translateX(0);
+        }
+
+        .wave:nth-child(2) {
+            bottom: 90px;
+            opacity: 0.5;
+            animation: wave-reverse 8s linear infinite;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 80px;
+            opacity: 0.2;
+            animation: wave 12s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes wave-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--text), var(--highlight));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .artist {
+            font-size: 1.2rem;
+            color: var(--highlight);
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        button i {
+            font-size: 1rem;
+        }
+
+        .lyrics-container {
+            background: rgba(10, 25, 47, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lyrics {
+            line-height: 2;
+            font-size: 1.1rem;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .highlight {
+            color: var(--highlight);
+            font-weight: 600;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--highlight));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
             }
             
-            lyricsElement.innerHTML = currentLyric.text;
+            .lyrics {
+                font-size: 1rem;
+                line-height: 1.8;
+            }
             
-            // Update progress bar
-            const progress = (currentTime / audio.duration) * 100;
-            if (!isNaN(progress)) {
-                progressBar.style.width = `${progress}%`;
+            .container {
+                padding: 1.5rem;
             }
         }
 
-        // [Event listeners dan inisialisasi tetap sama]
+        /* Animasi teks */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lyrics p {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .lyrics p:nth-child(1) { animation-delay: 0.1s; }
+        .lyrics p:nth-child(2) { animation-delay: 0.2s; }
+        .lyrics p:nth-child(3) { animation-delay: 0.3s; }
+        .lyrics p:nth-child(4) { animation-delay: 0.4s; }
+        .lyrics p:nth-child(5) { animation-delay: 0.5s; }
+        .lyrics p:nth-child(6) { animation-delay: 0.6s; }
+        .lyrics p:nth-child(7) { animation-delay: 0.7s; }
+        .lyrics p:nth-child(8) { animation-delay: 0.8s; }
+        .lyrics p:nth-child(9) { animation-delay: 0.9s; }
+        .lyrics p:nth-child(10) { animation-delay: 1s; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Aku, Kamu, Dan Samudra</h1>
+            <div class="artist">Rebellion Rose</div>
+            
+            <div class="controls">
+                <button id="playBtn"><i class="fas fa-play"></i> Putar</button>
+                <button id="speedBtn"><i class="fas fa-tachometer-alt"></i> Speed Up</button>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="time-info">
+                <span id="currentTime">0:00</span>
+                <span id="duration">3:45</span>
+            </div>
+        </header>
+
+        <div class="lyrics-container">
+            <div class="lyrics">
+                <p>Di tepian ini ku sendiri</p>
+                <p>Memandang luasnya samudra biru</p>
+                <p>Angin berhembus membawa rindu</p>
+                <p>Pada dirimu yang jauh di sana</p>
+                <p class="highlight">Aku, kamu, dan samudra</p>
+                <p class="highlight">Memisahkan tapi jua menyatukan</p>
+                <p>Gelombang yang datang dan pergi</p>
+                <p>Seperti detak jantung yang berdegup</p>
+                <p>Untukmu yang selalu kurindu</p>
+                <p>Di seberang samudra nan biru</p>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2023 Lirik Lagu Modern | Rebellion Rose - Aku, Kamu, Dan Samudra
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const playBtn = document.getElementById('playBtn');
+            const speedBtn = document.getElementById('speedBtn');
+            const progressBar = document.getElementById('progressBar');
+            const currentTimeEl = document.getElementById('currentTime');
+            const durationEl = document.getElementById('duration');
+            
+            // Audio simulation (in a real app, you would use actual audio)
+            let isPlaying = false;
+            let isSpedUp = false;
+            let progress = 0;
+            let interval;
+            const totalDuration = 225; // 3:45 in seconds
+            
+            // Format time from seconds to MM:SS
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+            
+            // Update progress bar and time
+            function updateProgress() {
+                progress += 1;
+                if (progress > totalDuration) {
+                    progress = 0;
+                    clearInterval(interval);
+                    isPlaying = false;
+                    playBtn.innerHTML = '<i class="fas fa-play"></i> Putar';
+                }
+                
+                const percentage = (progress / totalDuration) * 100;
+                progressBar.style.width = `${percentage}%`;
+                currentTimeEl.textContent = formatTime(progress);
+            }
+            
+            // Play/pause button
+            playBtn.addEventListener('click', function() {
+                isPlaying = !isPlaying;
+                
+                if (isPlaying) {
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i> Jeda';
+                    interval = setInterval(updateProgress, 1000);
+                } else {
+                    playBtn.innerHTML = '<i class="fas fa-play"></i> Putar';
+                    clearInterval(interval);
+                }
+            });
+            
+            // Speed up button
+            speedBtn.addEventListener('click', function() {
+                isSpedUp = !isSpedUp;
+                
+                if (isSpedUp) {
+                    speedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Normal';
+                    // In a real app, you would change playbackRate here
+                } else {
+                    speedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Speed Up';
+                }
+            });
+            
+            // Click on progress bar to seek
+            progressBar.parentElement.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                progress = pos * totalDuration;
+                progressBar.style.width = `${pos * 100}%`;
+                currentTimeEl.textContent = formatTime(progress);
+                
+                if (isPlaying) {
+                    clearInterval(interval);
+                    interval = setInterval(updateProgress, 1000);
+                }
+            });
+            
+            // Set initial duration
+            durationEl.textContent = formatTime(totalDuration);
+            
+            // Highlight current lyric (simulation)
+            const lyrics = document.querySelectorAll('.lyrics p');
+            let currentLyric = 0;
+            
+            function highlightLyric() {
+                lyrics.forEach((line, index) => {
+                    if (index === currentLyric) {
+                        line.classList.add('highlight');
+                    } else {
+                        line.classList.remove('highlight');
+                    }
+                });
+                
+                currentLyric = (currentLyric + 1) % lyrics.length;
+            }
+            
+            // Simulate lyric highlighting (every 10 seconds in this demo)
+            setInterval(highlightLyric, 10000);
+        });
     </script>
 </body>
 </html>
