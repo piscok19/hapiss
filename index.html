@@ -1,331 +1,494 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tulus - Monokrom | Lirik Lagu</title>
+    <title>Perfect - Ed Sheeran with Solar System</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
             margin: 0;
-            padding: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 90%;
-            margin: 20px auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        h2 {
-            color: #7f8c8d;
-            text-align: center;
-            font-weight: normal;
-            margin-top: 0;
-            margin-bottom: 30px;
-        }
-
-        .audio-container {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-
-        .lyrics-container {
-            line-height: 1.8;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        .lyric-line {
-            margin: 15px 0;
-            color: #7f8c8d;
-            transition: all 0.3s ease;
-        }
-
-        .lyric-line.active {
-            color: #2c3e50;
-            font-weight: bold;
-            font-size: 20px;
-            transform: scale(1.05);
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 5px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            margin: 20px 0;
-            cursor: pointer;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background-color: #3498db;
-            border-radius: 5px;
-            width: 0%;
-        }
-
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 20px;
-        }
-
-        .controls {
-            display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            background-color: #000;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+        
+        /* Background Tata Surya */
+        #solar-system {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .sun {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #ffde00 0%, #ff8c00 70%, #ff4500 100%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px #ff8c00, 0 0 100px #ff4500;
+            animation: pulse 5s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 50px #ff8c00, 0 0 100px #ff4500; }
+            100% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 70px #ff8c00, 0 0 140px #ff4500; }
+        }
+        
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            transform-origin: center;
+        }
+        
+        .mercury {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #a9a9a9, #696969);
+            top: 50%;
+            left: 50%;
+            margin-top: -5px;
+            margin-left: -5px;
+            animation: orbit-mercury 8s linear infinite;
+        }
+        
+        .venus {
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #e6c229, #d4a017);
+            top: 50%;
+            left: 50%;
+            margin-top: -7.5px;
+            margin-left: -7.5px;
+            animation: orbit-venus 15s linear infinite;
+        }
+        
+        .earth {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #1E90FF, #006400);
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+            animation: orbit-earth 25s linear infinite;
+        }
+        
+        .mars {
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #ff4500, #8b0000);
+            top: 50%;
+            left: 50%;
+            margin-top: -7.5px;
+            margin-left: -7.5px;
+            animation: orbit-mars 40s linear infinite;
+        }
+        
+        @keyframes orbit-mercury {
+            0% { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+        }
+        
+        @keyframes orbit-venus {
+            0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+        }
+        
+        @keyframes orbit-earth {
+            0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+        }
+        
+        @keyframes orbit-mars {
+            0% { transform: rotate(0deg) translateX(240px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(240px) rotate(-360deg); }
+        }
+        
+        /* Bintang-bintang kecil */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--opacity); transform: scale(1); }
+        }
+        
+        /* Container untuk gambar-gambar lucu */
+        #cute-images-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* Container lirik dan kontrol */
+        .lyrics-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
             margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .control-btn {
-            background: none;
+        
+        #lyrics {
+            font-size: 22px;
+            line-height: 1.6;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .highlight {
+            color: #ff6bff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            font-weight: bold;
+        }
+        
+        .controls {
+            z-index: 2;
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6bff, #4dabff);
+            color: white;
             border: none;
-            font-size: 24px;
-            color: #2c3e50;
+            padding: 12px 25px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: color 0.2s;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-
-        .control-btn:hover {
-            color: #3498db;
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 255, 0.6);
         }
-
-        .play-pause {
-            font-size: 36px;
+        
+        #progress-container {
+            width: 80%;
+            max-width: 600px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            z-index: 2;
         }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
+        
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6bff, #4dabff);
+            transition: width 0.1s linear;
+        }
+        
+        .song-info {
+            margin-bottom: 20px;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .song-title {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #4dabff;
+            text-shadow: 0 0 10px rgba(77, 171, 255, 0.7);
+        }
+        
+        .artist {
+            font-size: 16px;
+            color: #aaa;
+        }
+        
+        /* Style untuk gambar lucu */
+        .cute-image {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            animation: float 15s infinite linear;
+            opacity: 0.7;
+            z-index: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
             }
-            
-            .lyrics-container {
-                font-size: 16px;
+            10% {
+                opacity: 0.7;
             }
-            
-            .lyric-line.active {
-                font-size: 18px;
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Monokrom</h1>
-        <h2>Tulus</h2>
-        
-        <div class="audio-container">
-            <iframe width="100%" height="200" src="https://www.youtube.com/embed/8zvxqKhWE9o?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        
-        <div class="progress-container" id="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-        </div>
-        
-        <div class="time-display">
-            <span id="current-time">0:00</span>
-            <span id="total-time">3:55</span>
-        </div>
-        
-        <div class="controls">
-            <button class="control-btn" id="prev-btn">⏮</button>
-            <button class="control-btn play-pause" id="play-btn">▶</button>
-            <button class="control-btn" id="next-btn">⏭</button>
-        </div>
-        
-        <div class="lyrics-container" id="lyrics-container">
-            <div class="lyric-line" data-time="9">Monokrom, hidupku sebelum kau datang</div>
-            <div class="lyric-line" data-time="13">Kau bawa pelangi, kau bawa warna</div>
-            <div class="lyric-line" data-time="17">Kau bawa cinta, kau bawa bahagia</div>
-            <div class="lyric-line" data-time="22">Kau bawa dirimu yang sempurna</div>
-            
-            <div class="lyric-line" data-time="26">Kau ubah aku yang dulu sendiri</div>
-            <div class="lyric-line" data-time="30">Jadi manusia yang mau mengerti</div>
-            <div class="lyric-line" data-time="34">Kau ubah aku yang dulu tak peduli</div>
-            <div class="lyric-line" data-time="38">Jadi manusia yang mau mencintai</div>
-            
-            <div class="lyric-line" data-time="43">Dan bila esok, atau nanti</div>
-            <div class="lyric-line" data-time="47">Kau tiada lagi di sini</div>
-            <div class="lyric-line" data-time="51">Aku 'kan tetap, seperti ini</div>
-            <div class="lyric-line" data-time="55">Tetap mencintai, tetap setia</div>
-            
-            <div class="lyric-line" data-time="60">Monokrom, hidupku bila kau pergi</div>
-            <div class="lyric-line" data-time="64">Tak ada pelangi, tak ada warna</div>
-            <div class="lyric-line" data-time="68">Tak ada cinta, tak ada bahagia</div>
-            <div class="lyric-line" data-time="72">Tak ada dirimu yang sempurna</div>
-            
-            <div class="lyric-line" data-time="77">Dan bila esok, atau nanti</div>
-            <div class="lyric-line" data-time="81">Kau tiada lagi di sini</div>
-            <div class="lyric-line" data-time="85">Aku 'kan tetap, seperti ini</div>
-            <div class="lyric-line" data-time="89">Tetap mencintai, tetap setia</div>
-            
-            <div class="lyric-line" data-time="94">Monokrom, hidupku bila kau pergi</div>
-            <div class="lyric-line" data-time="98">Tak ada pelangi, tak ada warna</div>
-            <div class="lyric-line" data-time="102">Tak ada cinta, tak ada bahagia</div>
-            <div class="lyric-line" data-time="106">Tak ada dirimu yang sempurna</div>
-            
-            <div class="lyric-line" data-time="111">Monokrom, hidupku bila kau pergi</div>
-            <div class="lyric-line" data-time="115">Monokrom, hidupku bila kau pergi</div>
-        </div>
+    <!-- Background Tata Surya -->
+    <div id="solar-system">
+        <div class="sun"></div>
+        <div class="planet mercury"></div>
+        <div class="planet venus"></div>
+        <div class="planet earth"></div>
+        <div class="planet mars"></div>
+    </div>
+    
+    <!-- Bintang-bintang berkedip -->
+    <div id="stars-container"></div>
+    
+    <!-- Container untuk gambar-gambar lucu -->
+    <div id="cute-images-container"></div>
+    
+    <!-- Konten utama -->
+    <div class="song-info">
+        <div class="song-title">Perfect</div>
+        <div class="artist">Ed Sheeran</div>
+    </div>
+    
+    <div class="lyrics-container">
+        <div id="lyrics">Klik Play untuk memulai...</div>
+    </div>
+    
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+    
+    <div class="controls">
+        <button id="playBtn">Play</button>
+        <button id="restartBtn">Restart</button>
     </div>
 
+    <audio id="audio" src="perfect.mp3"></audio>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elements
-            const lyricsContainer = document.getElementById('lyrics-container');
-            const lyricLines = document.querySelectorAll('.lyric-line');
-            const progressContainer = document.getElementById('progress-container');
-            const progressBar = document.getElementById('progress-bar');
-            const currentTimeEl = document.getElementById('current-time');
-            const totalTimeEl = document.getElementById('total-time');
-            const playBtn = document.getElementById('play-btn');
+        // Inisialisasi elemen
+        const starsContainer = document.getElementById('stars-container');
+        const cuteContainer = document.getElementById('cute-images-container');
+        const lyricsElement = document.getElementById('lyrics');
+        const playBtn = document.getElementById('playBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const audio = document.getElementById('audio');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        
+        // Daftar gambar lucu
+        const cuteImages = [
+            'https://i.pinimg.com/originals/2e/60/07/2e60079f1e36b5c7689f876b35a620af.png',
+            'https://clipart-library.com/images/8ixKbxj8T.png',
+            'https://www.freepnglogos.com/uploads/cute-png/cute-png-hello-kitty-png-image-pngpix-0.png',
+            'https://www.pngmart.com/files/15/Cute-Pikachu-PNG-Transparent-Image.png',
+            'https://www.pngmart.com/files/15/Cute-Panda-PNG-Pic.png',
+            'https://www.pngmart.com/files/15/Cute-Kitten-PNG-Transparent-Image.png'
+        ];
+        
+        // Data lirik dengan timestamp (dalam detik)
+        const songData = {
+            title: "Perfect",
+            artist: "Ed Sheeran",
+            lyrics: [
+                { time: 0, text: "I found a love for me" },
+                { time: 3, text: "Darling, just dive right in" },
+                { time: 6, text: "And follow my lead" },
+                { time: 9, text: "Well, I found a girl, beautiful and sweet" },
+                { time: 13, text: "Oh, I never knew you were the someone waiting for me" },
+                { time: 19, text: "'Cause we were just kids when we fell in love" },
+                { time: 23, text: "Not knowing what it was" },
+                { time: 26, text: "I will not give you up this time" },
+                { time: 30, text: "But darling, just kiss me slow" },
+                { time: 33, text: "Your heart is all I own" },
+                { time: 36, text: "And in your eyes, you're holding mine" },
+                { time: 40, text: "Baby, I'm dancing in the dark" },
+                { time: 43, text: "With you between my arms" },
+                { time: 46, text: "Barefoot on the grass" },
+                { time: 49, text: "Listening to our favorite song" },
+                { time: 53, text: "When you said you looked a mess" },
+                { time: 56, text: "I whispered underneath my breath" },
+                { time: 59, text: "But you heard it" },
+                { time: 61, text: "Darling, you look perfect tonight" },
+                { time: 67, text: "Well, I found a woman, stronger than anyone I know" },
+                { time: 72, text: "She shares my dreams, I hope that someday I'll share her home" },
+                { time: 77, text: "I found a lover, to carry more than just my secrets" },
+                { time: 82, text: "To carry love, to carry children of our own" },
+                { time: 87, text: "We are still kids, but we're so in love" },
+                { time: 91, text: "Fighting against all odds" },
+                { time: 94, text: "I know we'll be alright this time" },
+                { time: 98, text: "Darling, just hold my hand" },
+                { time: 101, text: "Be my girl, I'll be your man" },
+                { time: 104, text: "I see my future in your eyes" },
+                { time: 108, text: "Baby, I'm dancing in the dark" },
+                { time: 111, text: "With you between my arms" },
+                { time: 114, text: "Barefoot on the grass" },
+                { time: 117, text: "Listening to our favorite song" },
+                { time: 121, text: "When I saw you in that dress, looking so beautiful" },
+                { time: 126, text: "I don't deserve this" },
+                { time: 128, text: "Darling, you look perfect tonight" },
+                { time: 136, text: "No, you look perfect tonight" }
+            ]
+        };
+        
+        // Buat bintang-bintang yang berkedip
+        function createStars() {
+            const starCount = 200;
             
-            // YouTube iframe API
-            const tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-            
-            let player;
-            let isPlaying = false;
-            let updateInterval;
-            
-            // YouTube Player API
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player(document.querySelector('iframe'), {
-                    events: {
-                        'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
-                    }
-                });
-            }
-            
-            function onPlayerReady(event) {
-                // Set total time
-                const duration = player.getDuration();
-                totalTimeEl.textContent = formatTime(duration);
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
                 
-                // Set up progress bar update
-                updateInterval = setInterval(updateProgress, 1000);
+                // Random properties
+                const size = Math.random() * 3;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const opacity = Math.random() * 0.8 + 0.2;
+                const duration = Math.random() * 5 + 3 + 's';
+                const delay = Math.random() * 5 + 's';
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.setProperty('--opacity', opacity);
+                star.style.setProperty('--duration', duration);
+                star.style.animationDelay = delay;
+                
+                starsContainer.appendChild(star);
             }
+        }
+        
+        // Buat gambar-gambar lucu yang muncul secara acak
+        function createCuteImages() {
+            setInterval(() => {
+                const img = document.createElement('img');
+                img.classList.add('cute-image');
+                img.src = cuteImages[Math.floor(Math.random() * cuteImages.length)];
+                
+                // Random properties
+                const size = Math.random() * 80 + 50;
+                const x = Math.random() * 100;
+                const duration = Math.random() * 10 + 10 + 's';
+                const delay = Math.random() * 5 + 's';
+                
+                img.style.width = `${size}px`;
+                img.style.height = `${size}px`;
+                img.style.left = `${x}%`;
+                img.style.bottom = `-${size}px`;
+                img.style.animationDuration = duration;
+                img.style.animationDelay = delay;
+                
+                cuteContainer.appendChild(img);
+                
+                // Hapus gambar setelah animasi selesai
+                setTimeout(() => {
+                    img.remove();
+                }, parseFloat(duration) * 1000);
+            }, 1500);
+        }
+        
+        // Update lirik berdasarkan waktu
+        function updateLyrics() {
+            const currentTime = audio.currentTime;
+            let currentLyric = { text: "" };
             
-            function onPlayerStateChange(event) {
-                if (event.data === YT.PlayerState.PLAYING) {
-                    isPlaying = true;
-                    playBtn.textContent = '⏸';
+            // Cari lirik yang sesuai dengan waktu saat ini
+            for (let i = 0; i < songData.lyrics.length; i++) {
+                if (currentTime >= songData.lyrics[i].time) {
+                    currentLyric = songData.lyrics[i];
                 } else {
-                    isPlaying = false;
-                    playBtn.textContent = '▶';
+                    break;
                 }
             }
             
-            // Format time (seconds to MM:SS)
-            function formatTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            lyricsElement.innerHTML = currentLyric.text;
+            
+            // Update progress bar
+            const progress = (currentTime / audio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // Event listeners
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "Pause";
+            } else {
+                audio.pause();
+                playBtn.textContent = "Play";
             }
-            
-            // Update progress bar and current time
-            function updateProgress() {
-                if (isPlaying) {
-                    const currentTime = player.getCurrentTime();
-                    const duration = player.getDuration();
-                    
-                    // Update progress bar
-                    const progressPercent = (currentTime / duration) * 100;
-                    progressBar.style.width = `${progressPercent}%`;
-                    
-                    // Update current time display
-                    currentTimeEl.textContent = formatTime(currentTime);
-                    
-                    // Highlight current lyric
-                    highlightLyric(currentTime);
-                }
-            }
-            
-            // Highlight the current lyric line
-            function highlightLyric(currentTime) {
-                let activeLine = null;
-                
-                lyricLines.forEach(line => {
-                    line.classList.remove('active');
-                    const lineTime = parseFloat(line.getAttribute('data-time'));
-                    
-                    if (currentTime >= lineTime) {
-                        activeLine = line;
-                    }
-                });
-                
-                if (activeLine) {
-                    activeLine.classList.add('active');
-                    
-                    // Scroll to active line
-                    activeLine.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }
-            }
-            
-            // Click on progress bar to seek
-            progressContainer.addEventListener('click', (e) => {
-                const width = progressContainer.clientWidth;
-                const clickX = e.offsetX;
-                const duration = player.getDuration();
-                
-                const seekTime = (clickX / width) * duration;
-                player.seekTo(seekTime, true);
-            });
-            
-            // Play/pause button
-            playBtn.addEventListener('click', () => {
-                if (isPlaying) {
-                    player.pauseVideo();
-                } else {
-                    player.playVideo();
-                }
-            });
-            
-            // Previous button (go to start)
-            document.getElementById('prev-btn').addEventListener('click', () => {
-                player.seekTo(0, true);
-            });
-            
-            // Next button (go to end)
-            document.getElementById('next-btn').addEventListener('click', () => {
-                player.seekTo(player.getDuration(), true);
-            });
-            
-            // Click on lyric to seek to that time
-            lyricLines.forEach(line => {
-                line.addEventListener('click', () => {
-                    const lineTime = parseFloat(line.getAttribute('data-time'));
-                    player.seekTo(lineTime, true);
-                });
-            });
         });
+        
+        restartBtn.addEventListener('click', () => {
+            audio.currentTime = 0;
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "Pause";
+            }
+        });
+        
+        audio.addEventListener('timeupdate', updateLyrics);
+        
+        audio.addEventListener('ended', () => {
+            playBtn.textContent = "Play";
+        });
+        
+        // Klik progress bar untuk seek
+        progressContainer.addEventListener('click', (e) => {
+            const percent = e.offsetX / progressContainer.offsetWidth;
+            audio.currentTime = percent * audio.duration;
+        });
+        
+        // Inisialisasi
+        createStars();
+        createCuteImages();
+        
+        // Update song info
+        document.querySelector('.song-title').textContent = songData.title;
+        document.querySelector('.artist').textContent = songData.artist;
     </script>
 </body>
 </html>
