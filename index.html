@@ -58,7 +58,6 @@
             height: 220px;
             margin: 25px auto;
             border-radius: 50%;
-            background: linear-gradient(45deg, #0f3460, #e94560);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -66,44 +65,23 @@
             border: 5px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
             position: relative;
+            transition: transform 0.5s ease;
         }
 
         .album-art img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%;
+            transition: opacity 0.5s ease;
         }
 
-        .vinyl {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(
-                circle, 
-                #121212 30%, 
-                #333 30%, 
-                #333 32%, 
-                transparent 32%, 
-                transparent 40%, 
-                #333 40%, 
-                #333 42%, 
-                transparent 42%
-            );
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0.9;
+        .album-art.spinning {
+            animation: spin 10s linear infinite;
         }
 
-        .vinyl::after {
-            content: '';
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: #ffffff;
-            border-radius: 50%;
-            z-index: 2;
+        .album-art:hover {
+            transform: scale(1.05);
         }
 
         .player-controls {
@@ -237,11 +215,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Animasi putar vinyl */
-        .spinning {
-            animation: spin 10s linear infinite;
-        }
-
+        /* Animasi putar album */
         @keyframes spin {
             100% {
                 transform: rotate(360deg);
@@ -332,8 +306,8 @@
             <p>The 1975</p>
         </div>
         
-        <div class="album-art">
-            <div class="vinyl spinning"></div>
+        <div class="album-art" id="album-art">
+            <img id="album-image" src="https://example.com/placeholder-album-cover.jpg" alt="Album Cover">
         </div>
         
         <div class="player-controls">
@@ -385,38 +359,48 @@
         const currentTimeEl = document.getElementById('current-time');
         const durationEl = document.getElementById('duration');
         const lyricsContainer = document.getElementById('lyrics');
-        const vinyl = document.querySelector('.vinyl');
+        const albumArt = document.getElementById('album-art');
+        const albumImage = document.getElementById('album-image');
+
+        // Daftar gambar yang akan ditampilkan sesuai dengan lirik
+        const imageUrls = [
+            "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=500&h=500&fit=crop",
+            "https://images.unsplash.com/photo-1598387993281-8e0c6eefa508?w=500&h=500&fit=crop",
+            "https://images.unsplash.com/photo-1511735111819-9a3f7709049c?w=500&h=500&fit=crop",
+            "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop",
+            "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&h=500&fit=crop"
+        ];
 
         // Daftar lirik dengan timestamp (dalam detik)
         const lyrics = [
-            { time: 0, text: "HAPISS" },
-            { time: 44, text: "I know a place" },
-            { time: 54, text: "It's somewhere I go when I need to remember your face" },
-            { time: 64, text: "We get married in our heads" },
-            { time: 75, text: "Something to do whilst we try to recall how we met" },
-            { time: 84, text: "Do you think I have forgotten?" },
-            { time: 89, text: "Do you think I have forgotten?" },
-            { time: 94, text: "Do you think I have forgotten about you?" },
-            { time: 104, text: "You and I (don't let go), we're alive (don't let go)" },
-            { time: 114, text: "With nothing to do, I could lay and just look in your eyes" },
-            { time: 123, text: "Wait (don't let go) and pretend (don't let go)" },
-            { time: 134, text: "Hold on and hope that we'll find our way back in the end (in the end)" },
-            { time: 144, text: "Do you think I have forgotten?" },
-            { time: 148, text: "Do you think I have forgotten?" },
-            { time: 174, text: "Do you think I have forgotten about you?" },
-            { time: 164, text: "Do you think I have forgotten?" },
-            { time: 169, text: "Do you think I have forgotten ?" },
-            { time: 174, text: "Do you think I have forgotten about you?" },
-            { time: 183, text: "And there was something 'bout you that now I can't remember" },
-            { time: 189, text: "It's the same damn thing that made my heart surrender" },
-            { time: 194, text: "And I miss you on a train, I miss you in the morning" },
-            { time: 199, text: "I never know what to think about" },
-            { time: 203, text: "I think about you (so don't let go)" },
-            { time: 208, text: "About you (so don't let go)" },
-            { time: 213, text: "Do you think I have forgotten about you? (Don't let go)" },
-            { time: 223, text: "About you..." },
-            { time: 229, text: "About you..." },
-            { time: 233, text: "Do you I think I have forgotten about you? (Don't let go)" }
+            { time: 0, text: "HAPISS", imageIndex: 0 },
+            { time: 44, text: "I know a place", imageIndex: 1 },
+            { time: 54, text: "It's somewhere I go when I need to remember your face", imageIndex: 1 },
+            { time: 64, text: "We get married in our heads", imageIndex: 2 },
+            { time: 75, text: "Something to do whilst we try to recall how we met", imageIndex: 2 },
+            { time: 84, text: "Do you think I have forgotten?", imageIndex: 3 },
+            { time: 89, text: "Do you think I have forgotten?", imageIndex: 3 },
+            { time: 94, text: "Do you think I have forgotten about you?", imageIndex: 3 },
+            { time: 104, text: "You and I (don't let go), we're alive (don't let go)", imageIndex: 4 },
+            { time: 114, text: "With nothing to do, I could lay and just look in your eyes", imageIndex: 4 },
+            { time: 123, text: "Wait (don't let go) and pretend (don't let go)", imageIndex: 0 },
+            { time: 134, text: "Hold on and hope that we'll find our way back in the end (in the end)", imageIndex: 0 },
+            { time: 144, text: "Do you think I have forgotten?", imageIndex: 1 },
+            { time: 148, text: "Do you think I have forgotten?", imageIndex: 1 },
+            { time: 174, text: "Do you think I have forgotten about you?", imageIndex: 1 },
+            { time: 164, text: "Do you think I have forgotten?", imageIndex: 2 },
+            { time: 169, text: "Do you think I have forgotten ?", imageIndex: 2 },
+            { time: 174, text: "Do you think I have forgotten about you?", imageIndex: 2 },
+            { time: 183, text: "And there was something 'bout you that now I can't remember", imageIndex: 3 },
+            { time: 189, text: "It's the same damn thing that made my heart surrender", imageIndex: 3 },
+            { time: 194, text: "And I miss you on a train, I miss you in the morning", imageIndex: 4 },
+            { time: 199, text: "I never know what to think about", imageIndex: 4 },
+            { time: 203, text: "I think about you (so don't let go)", imageIndex: 0 },
+            { time: 208, text: "About you (so don't let go)", imageIndex: 0 },
+            { time: 213, text: "Do you think I have forgotten about you? (Don't let go)", imageIndex: 1 },
+            { time: 223, text: "About you...", imageIndex: 2 },
+            { time: 229, text: "About you...", imageIndex: 3 },
+            { time: 233, text: "Do you I think I have forgotten about you? (Don't let go)", imageIndex: 4 }
         ];
 
         // Render lirik ke dalam container
@@ -435,11 +419,11 @@
             if (audio.paused) {
                 audio.play();
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                vinyl.classList.add('spinning');
+                albumArt.classList.add('spinning');
             } else {
                 audio.pause();
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                vinyl.classList.remove('spinning');
+                albumArt.classList.remove('spinning');
             }
         }
 
@@ -498,7 +482,20 @@
                     behavior: 'smooth',
                     block: 'center'
                 });
+                
+                // Ganti gambar album sesuai dengan lirik
+                changeAlbumImage(lyrics[currentLyricIndex].imageIndex);
             }
+        }
+
+        // Ganti gambar album
+        function changeAlbumImage(imageIndex) {
+            albumImage.style.opacity = 0;
+            
+            setTimeout(() => {
+                albumImage.src = imageUrls[imageIndex];
+                albumImage.style.opacity = 1;
+            }, 300);
         }
 
         // Atur volume
@@ -512,7 +509,7 @@
         audio.addEventListener('ended', () => {
             playBtn.innerHTML = '<i class="fas fa-play"></i>';
             progress.style.width = '0%';
-            vinyl.classList.remove('spinning');
+            albumArt.classList.remove('spinning');
         });
         progressContainer.addEventListener('click', setProgress);
         volumeSlider.addEventListener('input', setVolume);
@@ -520,6 +517,9 @@
         // Inisialisasi
         renderLyrics();
         audio.volume = 0.7;
+        
+        // Set gambar default
+        albumImage.src = imageUrls[0];
     </script>
 </body>
 </html>
