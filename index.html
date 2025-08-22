@@ -1,506 +1,525 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfect - Ed Sheeran Lyrics</title>
+    <title>About You - The 1975 | Lirik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap');
-        
-        :root {
-            --primary: #f8bbd0;
-            --secondary: #e91e63;
-            --dark: #333;
-            --light: #fff;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, var(--primary), #ffebee);
-            color: var(--dark);
-            line-height: 1.6;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-        
+
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-            width: 90%;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-        
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: var(--secondary);
-        }
-        
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        h2 {
-            font-weight: 300;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .hero-image {
+            max-width: 800px;
             width: 100%;
-            height: 300px;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 20px;
             overflow: hidden;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.2);
             position: relative;
         }
-        
-        .hero-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
-            z-index: 1;
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #e94560;
         }
-        
-        .hero-image img {
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .album-art {
+            width: 220px;
+            height: 220px;
+            margin: 25px auto;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #0f3460, #e94560);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 25px rgba(233, 69, 96, 0.5);
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .album-art img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
         }
-        
-        .hero-image:hover img {
-            transform: scale(1.05);
-        }
-        
-        .lyrics-container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-        }
-        
-        .verse {
-            margin-bottom: 2rem;
-        }
-        
-        .verse-title {
-            font-weight: 600;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .lyrics {
-            font-size: 1rem;
-            line-height: 1.8;
-            white-space: pre-line;
-        }
-        
-        .chorus {
-            font-style: italic;
-            border-left: 3px solid var(--secondary);
-            padding-left: 1rem;
-            margin: 1.5rem 0;
-        }
-        
-        .controls {
+
+        .vinyl {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle, 
+                #121212 30%, 
+                #333 30%, 
+                #333 32%, 
+                transparent 32%, 
+                transparent 40%, 
+                #333 40%, 
+                #333 42%, 
+                transparent 42%
+            );
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            opacity: 0.9;
         }
-        
+
+        .vinyl::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #ffffff;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
         .player-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
+            padding: 20px;
+            text-align: center;
         }
-        
-        button {
-            background: var(--secondary);
-            color: var(--light);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        button:hover {
-            background: #c2185b;
-            transform: translateY(-2px);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
+
         .progress-container {
             width: 100%;
-            max-width: 400px;
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 3px;
-            margin-top: 0.5rem;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
             cursor: pointer;
+            overflow: hidden;
         }
-        
+
         .progress {
             height: 100%;
-            background: var(--secondary);
-            border-radius: 3px;
             width: 0%;
+            background: linear-gradient(to right, #0ea5e9, #e94560);
+            border-radius: 10px;
+            transition: width 0.1s linear;
         }
-        
-        .time-info {
+
+        .time-display {
             display: flex;
             justify-content: space-between;
-            width: 100%;
-            max-width: 400px;
-            font-size: 0.8rem;
-            color: var(--dark);
-            margin-top: 0.3rem;
-        }
-        
-        .heart {
-            position: fixed;
-            font-size: 1.5rem;
-            color: var(--secondary);
-            animation: float 3s ease-in-out infinite;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: auto;
-            padding: 1rem;
+            margin-bottom: 20px;
             font-size: 0.9rem;
-            color: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
         }
-        
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .btn:hover {
+            color: #e94560;
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            background: #e94560;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.7);
+        }
+
+        .play-btn:hover {
+            background: #ff577f;
+            transform: scale(1.05);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .volume-slider {
+            width: 120px;
+            -webkit-appearance: none;
+            height: 5px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #e94560;
+            cursor: pointer;
+        }
+
+        .lyrics-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            border-radius: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .lyrics {
+            line-height: 1.8;
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .lyrics p {
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .current-lyric {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.4rem;
+            background: rgba(233, 69, 96, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animasi putar vinyl */
+        .spinning {
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(233, 69, 96, 0.5);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(233, 69, 96, 0.8);
+        }
+
+        /* Responsive design */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            .header h1 {
+                font-size: 2.2rem;
             }
             
-            h2 {
+            .header p {
                 font-size: 1.2rem;
             }
             
-            .lyrics {
-                font-size: 0.9rem;
+            .album-art {
+                width: 180px;
+                height: 180px;
             }
             
-            button {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
+            .lyrics {
+                font-size: 1.1rem;
+            }
+            
+            .current-lyric {
+                font-size: 1.2rem;
             }
         }
-        
-        /* Audio player hidden */
-        audio {
-            display: none;
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .album-art {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .btn {
+                font-size: 1.2rem;
+            }
+            
+            .play-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .lyrics {
+                font-size: 1rem;
+            }
+            
+            .current-lyric {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Perfect</h1>
-            <h2>Ed Sheeran</h2>
-        </header>
-        
-        <div class="hero-image">
-            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c01fc41b-e4f8-424a-a3a3-5663bf8ee2dd.png" alt="Romantic sunset scene with a couple silhouette under golden sky" />
+        <div class="header">
+            <h1>About You</h1>
+            <p>The 1975</p>
         </div>
         
-        <!-- Audio element -->
-        <audio id="audioPlayer" src="perfect.mp3"></audio>
-        
-        <div class="lyrics-container">
-            <div class="verse">
-                <div class="verse-title">[Verse 1]</div>
-                <div class="lyrics">I found a love for me
-Darling, just dive right in and follow my lead
-Well, I found a girl, beautiful and sweet
-I never knew you were the someone waiting for me</div>
-            </div>
-            
-            <div class="chorus">
-                <div class="lyrics">'Cause we were just kids when we fell in love
-Not knowing what it was
-I will not give you up this time
-But darling, just kiss me slow
-Your heart is all I own
-And in your eyes, you're holding mine</div>
-            </div>
-            
-            <div class="verse">
-                <div class="verse-title">[Verse 2]</div>
-                <div class="lyrics">Baby, I'm dancing in the dark
-With you between my arms
-Barefoot on the grass
-Listening to our favorite song
-When you said you looked a mess
-I whispered underneath my breath
-But you heard it
-Darling, you look perfect tonight</div>
-            </div>
-            
-            <div class="chorus">
-                <div class="lyrics">Well, I found a woman, stronger than anyone I know
-She shares my dreams, I hope that someday I'll share her home
-I found a lover, to carry more than just my secrets
-To carry love, to carry children of our own</div>
-            </div>
-            
-            <div class="verse">
-                <div class="verse-title">[Bridge]</div>
-                <div class="lyrics">We are still kids, but we're so in love
-Fighting against all odds
-I know we'll be alright this time
-Darling, just hold my hand
-Be my girl, I'll be your man
-I see my future in your eyes</div>
-            </div>
-            
-            <div class="chorus">
-                <div class="lyrics">Baby, I'm dancing in the dark
-With you between my arms
-Barefoot on the grass
-Listening to our favorite song
-When I saw you in that dress, looking so beautiful
-I don't deserve this, darling, you look perfect tonight</div>
-            </div>
+        <div class="album-art">
+            <div class="vinyl spinning"></div>
         </div>
         
-        <div class="controls">
-            <div class="player-controls">
-                <button id="playBtn">
-                    <span id="playIcon">Play Song</span>
-                </button>
-            </div>
-            <div class="progress-container" id="progressContainer">
+        <div class="player-controls">
+            <div class="progress-container" id="progress-container">
                 <div class="progress" id="progress"></div>
             </div>
-            <div class="time-info">
-                <span id="currentTime">0:00</span>
+            
+            <div class="time-display">
+                <span id="current-time">0:00</span>
                 <span id="duration">0:00</span>
+            </div>
+            
+            <div class="controls">
+                <button class="btn" id="prev">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="btn play-btn" id="play">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="btn" id="next">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+            </div>
+            
+            <div class="volume-container">
+                <i class="fas fa-volume-up"></i>
+                <input type="range" class="volume-slider" id="volume" min="0" max="1" step="0.01" value="0.7">
+            </div>
+        </div>
+        
+        <div class="lyrics-container">
+            <div class="lyrics" id="lyrics">
+                <!-- Lirik lagu akan dimasukkan melalui JavaScript -->
             </div>
         </div>
     </div>
-    
-    <footer>
-        Lyrics © Ed Sheeran · Belajar Hapiss
-    </footer>
-    
+
+    <audio id="audio" src="about.mp3"></audio>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const playBtn = document.getElementById('playBtn');
-            const playIcon = document.getElementById('playIcon');
-            const heroImage = document.querySelector('.hero-image img');
-            const lyricsContainer = document.querySelector('.lyrics-container');
-            const audioPlayer = document.getElementById('audioPlayer');
-            const progress = document.getElementById('progress');
-            const progressContainer = document.getElementById('progressContainer');
-            const currentTimeEl = document.getElementById('currentTime');
-            const durationEl = document.getElementById('duration');
-            
-            let isPlaying = false;
-            let heartInterval;
-            
-            // Format time in MM:SS
-            function formatTime(seconds) {
-                const minutes = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        // Elemen DOM
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('play');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const volumeSlider = document.getElementById('volume');
+        const progressContainer = document.getElementById('progress-container');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+        const lyricsContainer = document.getElementById('lyrics');
+        const vinyl = document.querySelector('.vinyl');
+
+        // Daftar lirik dengan timestamp (dalam detik)
+        const lyrics = [
+            { time: 0, text: "HAPISS" },
+            { time: 44, text: "I know a place" },
+            { time: 54, text: "It's somewhere I go when I need to remember your face" },
+            { time: 64, text: "We get married in our heads" },
+            { time: 75, text: "Something to do whilst we try to recall how we met" },
+            { time: 84, text: "Do you think I have forgotten?" },
+            { time: 89, text: "Do you think I have forgotten?" },
+            { time: 94, text: "Do you think I have forgotten about you?" },
+            { time: 104, text: "You and I (don't let go), we're alive (don't let go)" },
+            { time: 114, text: "With nothing to do, I could lay and just look in your eyes" },
+            { time: 123, text: "Wait (don't let go) and pretend (don't let go)" },
+            { time: 134, text: "Hold on and hope that we'll find our way back in the end (in the end)" },
+            { time: 144, text: "Do you think I have forgotten?" },
+            { time: 148, text: "Do you think I have forgotten?" },
+            { time: 174, text: "Do you think I have forgotten about you?" },
+            { time: 164, text: "Do you think I have forgotten?" },
+            { time: 169, text: "Do you think I have forgotten ?" },
+            { time: 174, text: "Do you think I have forgotten about you?" },
+            { time: 183, text: "And there was something 'bout you that now I can't remember" },
+            { time: 189, text: "It's the same damn thing that made my heart surrender" },
+            { time: 194, text: "And I miss you on a train, I miss you in the morning" },
+            { time: 199, text: "I never know what to think about" },
+            { time: 203, text: "I think about you (so don't let go)" },
+            { time: 208, text: "About you (so don't let go)" },
+            { time: 213, text: "Do you think I have forgotten about you? (Don't let go)" },
+            { time: 223, text: "About you..." },
+            { time: 229, text: "About you..." },
+            { time: 233, text: "Do you I think I have forgotten about you? (Don't let go)" }
+        ];
+
+        // Render lirik ke dalam container
+        function renderLyrics() {
+            lyricsContainer.innerHTML = '';
+            lyrics.forEach(item => {
+                const p = document.createElement('p');
+                p.textContent = item.text;
+                p.setAttribute('data-time', item.time);
+                lyricsContainer.appendChild(p);
+            });
+        }
+
+        // Putar atau jeda musik
+        function playPause() {
+            if (audio.paused) {
+                audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                vinyl.classList.add('spinning');
+            } else {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                vinyl.classList.remove('spinning');
             }
+        }
+
+        // Format waktu (detik ke menit:detik)
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const { currentTime, duration } = audio;
+            const progressPercent = (currentTime / duration) * 100;
+            progress.style.width = `${progressPercent}%`;
             
-            // Update progress bar
-            function updateProgress() {
-                const { duration, currentTime } = audioPlayer;
-                const progressPercent = (currentTime / duration) * 100;
-                progress.style.width = `${progressPercent}%`;
-                
-                currentTimeEl.textContent = formatTime(currentTime);
-                
-                // Set duration if not already set
-                if (durationEl.textContent === '0:00' && !isNaN(duration)) {
-                    durationEl.textContent = formatTime(duration);
+            currentTimeEl.textContent = formatTime(currentTime);
+            durationEl.textContent = formatTime(duration);
+            
+            // Highlight lirik sesuai waktu
+            highlightLyric(currentTime);
+        }
+
+        // Set progress bar ketika diklik
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            audio.currentTime = (clickX / width) * duration;
+        }
+
+        // Highlight lirik yang sedang aktif
+        function highlightLyric(currentTime) {
+            const lyricsElements = document.querySelectorAll('#lyrics p');
+            let currentLyricIndex = 0;
+            
+            // Cari lirik yang sesuai dengan waktu saat ini
+            for (let i = lyrics.length - 1; i >= 0; i--) {
+                if (currentTime >= lyrics[i].time) {
+                    currentLyricIndex = i;
+                    break;
                 }
             }
             
-            // Set progress when clicking on progress bar
-            function setProgress(e) {
-                const width = this.clientWidth;
-                const clickX = e.offsetX;
-                const duration = audioPlayer.duration;
-                audioPlayer.currentTime = (clickX / width) * duration;
-            }
+            // Hapus kelas current dari semua lirik
+            lyricsElements.forEach(el => {
+                el.classList.remove('current-lyric');
+            });
             
-            // Play/pause function
-            function togglePlay() {
-                if (isPlaying) {
-                    audioPlayer.pause();
-                    stopHearts();
-                    playIcon.textContent = 'Play Song';
-                } else {
-                    audioPlayer.play();
-                    startHearts();
-                    playIcon.textContent = 'Pause Song';
-                }
+            // Tambahkan kelas current ke lirik yang aktif
+            if (lyricsElements[currentLyricIndex]) {
+                lyricsElements[currentLyricIndex].classList.add('current-lyric');
                 
-                isPlaying = !isPlaying;
-                updateVisualEffects(isPlaying);
-            }
-            
-            // Update visual effects based on playing state
-            function updateVisualEffects(playing) {
-                if (playing) {
-                    lyricsContainer.style.transform = 'translateY(-5px)';
-                    heroImage.style.filter = 'brightness(1.1)';
-                    highlightLyrics();
-                } else {
-                    lyricsContainer.style.transform = '';
-                    heroImage.style.filter = '';
-                    resetLyricsHighlight();
-                }
-            }
-            
-            // Highlight lyrics in sequence
-            function highlightLyrics() {
-                const lyrics = document.querySelectorAll('.lyrics');
-                let delay = 0;
-                
-                lyrics.forEach((lyric, index) => {
-                    setTimeout(() => {
-                        lyric.style.opacity = '0.5';
-                        lyric.style.transition = 'all 0.3s ease';
-                        
-                        setTimeout(() => {
-                            lyric.style.opacity = '1';
-                            lyric.style.fontWeight = index % 3 === 0 ? '600' : 'normal';
-                        }, 500);
-                    }, delay);
-                    
-                    delay += 2500;
+                // Scroll ke lirik yang aktif
+                lyricsElements[currentLyricIndex].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
                 });
             }
-            
-            // Reset lyrics highlight
-            function resetLyricsHighlight() {
-                const lyrics = document.querySelectorAll('.lyrics');
-                lyrics.forEach(lyric => {
-                    lyric.style.opacity = '';
-                    lyric.style.fontWeight = '';
-                });
-            }
-            
-            // Heart animations
-            function startHearts() {
-                heartInterval = setInterval(() => {
-                    createHeart();
-                }, 500);
-            }
-            
-            function stopHearts() {
-                clearInterval(heartInterval);
-            }
-            
-            function createHeart() {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '♥';
-                
-                const x = Math.random() * window.innerWidth;
-                const delay = Math.random() * 5;
-                const size = Math.random() * 2 + 1;
-                
-                heart.style.left = `${x}px`;
-                heart.style.bottom = `-10px`;
-                heart.style.fontSize = `${size}rem`;
-                heart.style.animationDuration = `${Math.random() * 2 + 2}s`;
-                heart.style.animationDelay = `${delay}s`;
-                
-                document.body.appendChild(heart);
-                
-                setTimeout(() => {
-                    heart.remove();
-                }, 5000);
-            }
-            
-            // Event listeners
-            playBtn.addEventListener('click', togglePlay);
-            audioPlayer.addEventListener('timeupdate', updateProgress);
-            audioPlayer.addEventListener('ended', () => {
-                isPlaying = false;
-                playIcon.textContent = 'Play Song';
-                updateVisualEffects(false);
-                stopHearts();
-            });
-            progressContainer.addEventListener('click', setProgress);
-            
-            // Parallax effect for hero image
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.scrollY;
-                heroImage.style.transform = `translateY(${scrollPosition * 0.15}px)`;
-            });
-            
-            // Load audio metadata when ready
-            audioPlayer.addEventListener('loadedmetadata', function() {
-                durationEl.textContent = formatTime(audioPlayer.duration);
-            });
+        }
+
+        // Atur volume
+        function setVolume() {
+            audio.volume = volumeSlider.value;
+        }
+
+        // Event Listeners
+        playBtn.addEventListener('click', playPause);
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', () => {
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            progress.style.width = '0%';
+            vinyl.classList.remove('spinning');
         });
+        progressContainer.addEventListener('click', setProgress);
+        volumeSlider.addEventListener('input', setVolume);
+
+        // Inisialisasi
+        renderLyrics();
+        audio.volume = 0.7;
     </script>
 </body>
 </html>
